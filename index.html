@@ -46,6 +46,20 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
+        /* --- Offline Overlay (No Internet Blocker) --- */
+        #offline-overlay {
+            position: fixed; inset: 0; background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(15px);
+            display: none; justify-content: center; align-items: center; z-index: 100000; flex-direction: column;
+        }
+        .offline-box {
+            background: var(--glass-bg); border: 1px solid #EF4444; padding: 40px 20px;
+            border-radius: 20px; text-align: center; width: 85%; max-width: 350px;
+            box-shadow: 0 10px 40px rgba(239, 68, 68, 0.2); animation: pulseOffline 2s infinite;
+        }
+        .offline-box h2 { font-family: 'Yatra One'; color: #EF4444; margin: 15px 0; font-size: 2.2rem;}
+        .offline-box p { color: #CBD5E1; font-size: 1.1rem; line-height: 1.5; font-weight: 600;}
+        @keyframes pulseOffline { 0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
+
         /* --- Splash Screen --- */
         #splash {
             position: fixed; inset: 0; 
@@ -149,9 +163,22 @@
         .popup-box.show { transform: scale(1); opacity: 1; }
         .popup-box h2 { font-family: 'Yatra One'; background: var(--active-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 2.5rem; margin-top: 10px; margin-bottom: 10px; }
         .btn-close { background: var(--active-grad); color: white; border: none; padding: 12px 35px; border-radius: 30px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 15px;}
+        
+        /* Privacy Policy Modal */
+        .privacy-content h3 { color: var(--active-glow); margin-top: 15px; margin-bottom: 5px; font-size: 1.1rem;}
+        .privacy-content p, .privacy-content ul { margin-bottom: 10px; color: var(--text-muted); font-size: 0.9rem;}
+        .privacy-content ul { padding-left: 20px;}
     </style>
 </head>
 <body>
+
+    <div id="offline-overlay">
+        <div class="offline-box">
+            <div style="font-size: 5rem; margin-bottom: 10px;">📶</div>
+            <h2>इंटरनेट बंद है!</h2>
+            <p>इस ऐप का उपयोग करने के लिए इंटरनेट या वाई-फाई चालू होना आवश्यक है। कृपया अपना कनेक्शन जांचें।</p>
+        </div>
+    </div>
 
     <div id="splash">
         <div class="splash-om">ॐ</div>
@@ -233,9 +260,49 @@
                 </div>
         </div>
         
+        <div class="setting-card" onclick="openPrivacyPolicy()" style="cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; transition: 0.3s;">
+            <span style="font-size: 1.5rem;">📜</span> 
+            <span style="font-weight: 600; font-size: 1.1rem; color: var(--text-light);">Privacy Policy</span>
+        </div>
+
         <div class="setting-card" style="text-align: center; color: var(--text-muted); font-size: 0.9rem;">
-            <p>1. यह ऐप 100% सुरक्षित और ऑफलाइन है।</p>
-            <p style="margin-top: 10px;">संपर्क: manager.dukaan@gmail.com</p>
+            <p>संपर्क: manager.dukaan@gmail.com</p>
+        </div>
+    </div>
+
+    <div id="privacy-page" class="page" style="z-index: 200;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h2 class="page-title" style="margin-bottom: 0;">Privacy Policy</h2>
+            <span onclick="closePrivacyPolicy()" style="font-size: 1.5rem; cursor: pointer; color: var(--text-light);">❌</span>
+        </div>
+        
+        <div class="setting-card privacy-content" style="height: calc(100% - 70px); overflow-y: auto;">
+            <p><strong>Effective Date:</strong> May 2026</p>
+            <p>Thank you for choosing <strong>Amazing Jap Counter</strong>. We are committed to protecting your personal information and right to privacy.</p>
+            
+            <h3>1. Information We Do NOT Collect</h3>
+            <p>We want to be completely transparent with you: <strong>We do not collect, store, transmit, or share any of your personal data.</strong></p>
+            <ul>
+                <li><strong>Local Storage Only:</strong> All the data generated within the App, including your daily Chanting (Jap) counts, goals, and history, is stored strictly on your device's local storage.</li>
+                <li><strong>No Cloud Servers:</strong> We do not have servers, and your data never leaves your mobile phone.</li>
+                <li><strong>No Account Required:</strong> You do not need to create an account, log in, or provide an email address, name, or phone number to use the App.</li>
+            </ul>
+
+            <h3>2. Third-Party Services (Advertisements)</h3>
+            <p>To keep the app free, we use <strong>Google AdMob</strong> to display ads. AdMob may use standard device identifiers to serve relevant ads. You can review Google AdMob's Privacy Policy at: <br><a href="https://policies.google.com/privacy" target="_blank" style="color: var(--active-glow);">policies.google.com/privacy</a></p>
+
+            <h3>3. Device Permissions</h3>
+            <p>The App requests the following permission solely to enhance your user experience:</p>
+            <ul>
+                <li><strong>Notifications:</strong> We ask for local notification permission to send you a daily reminder (e.g., at 7:00 AM) to practice your Jap. These are triggered locally by your device.</li>
+            </ul>
+
+            <h3>4. Children’s Privacy</h3>
+            <p>Since our App does not collect any data, children can use the App safely without the risk of their personal information being compromised.</p>
+
+            <h3>5. Contact Us</h3>
+            <p>If you have any questions or suggestions regarding this Privacy Policy, please contact us at:</p>
+            <p style="font-weight: bold; color: var(--text-light);">manager.dukaan@gmail.com</p>
         </div>
     </div>
 
@@ -270,6 +337,19 @@
     </div>
 
     <script>
+        // --- Internet Connection Monitor ---
+        function checkInternetConnection() {
+            const overlay = document.getElementById('offline-overlay');
+            if (navigator.onLine) {
+                overlay.style.display = 'none';
+            } else {
+                overlay.style.display = 'flex';
+            }
+        }
+        window.addEventListener('online', checkInternetConnection);
+        window.addEventListener('offline', checkInternetConnection);
+
+
         // Data Structure
         let japsData = JSON.parse(localStorage.getItem('ajc_currentData')) || {
             radha: { count: 0, malas: 0, shadeIndex: 0 },
@@ -317,6 +397,9 @@
         }
 
         window.onload = () => {
+            // Check Internet initially
+            checkInternetConnection();
+
             setTimeout(() => {
                 document.getElementById('splash').style.opacity = '0';
                 setTimeout(() => document.getElementById('splash').style.display = 'none', 800);
@@ -550,6 +633,14 @@
                 document.getElementById('malas').innerText = 0; document.getElementById('count').innerText = 0;
                 circle.style.strokeDashoffset = circumference;
             }
+        }
+
+        function openPrivacyPolicy() {
+            document.getElementById('privacy-page').classList.add('active');
+        }
+
+        function closePrivacyPolicy() {
+            document.getElementById('privacy-page').classList.remove('active');
         }
 
         function showPopup() {
