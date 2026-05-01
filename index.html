@@ -9,33 +9,29 @@
     
     <style>
         :root {
-            /* 🌑 App Background & Text */
+            /* Default Dark Mode Colors */
             --app-bg: #0F172A;
             --text-light: #FFFFFF;
-
-            /* 🌸 राधा जी */
-            --radha-grad: linear-gradient(135deg, #6366F1, #8B5CF6);
-            --radha-glow: #8B5CF6;
-
-            /* 🔱 शिव जी */
-            --shiva-grad: linear-gradient(135deg, #2563EB, #60A5FA);
-            --shiva-glow: #60A5FA;
-
-            /* 🏹 श्री राम */
-            --ram-grad: linear-gradient(135deg, #F97316, #FDBA74);
-            --ram-glow: #F97316;
-
-            /* 🟢 नवकार */
-            --navkar-grad: linear-gradient(135deg, #10B981, #34D399);
-            --navkar-glow: #10B981;
-
-            /* Active Theme Variables (Default: Radha) */
-            --active-grad: var(--radha-grad);
-            --active-glow: var(--radha-glow);
-            
-            /* Glass Elements */
+            --text-muted: #94A3B8;
             --glass-bg: rgba(255, 255, 255, 0.05);
             --glass-border: rgba(255, 255, 255, 0.1);
+            --nav-bg: rgba(15, 23, 42, 0.95);
+            --popup-bg: #1E293B;
+
+            /* Dynamic Variables (Set via JS) */
+            --active-grad: linear-gradient(135deg, #6366F1, #8B5CF6);
+            --active-glow: #8B5CF6;
+        }
+
+        /* Light Mode Overrides */
+        body.light-mode {
+            --app-bg: #F8FAFC;
+            --text-light: #0F172A;
+            --text-muted: #64748B;
+            --glass-bg: #FFFFFF;
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --popup-bg: #FFFFFF;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
@@ -44,140 +40,100 @@
             font-family: 'Poppins', sans-serif;
             background-color: var(--app-bg);
             color: var(--text-light);
-            height: 100vh; overflow: hidden;
+            height: 100dvh; /* Fix for mobile browser clipping */
+            overflow: hidden;
             display: flex; flex-direction: column;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* --- Devotional Splash Screen (Traditional & Simple) --- */
+        /* --- Splash Screen --- */
         #splash {
             position: fixed; inset: 0; 
-            background: radial-gradient(circle at center, #1E293B 0%, var(--app-bg) 80%); 
-            z-index: 9999;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: opacity 0.8s ease;
+            background: radial-gradient(circle at center, var(--glass-bg) 0%, var(--app-bg) 100%); 
+            z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: opacity 0.8s ease; background-color: var(--app-bg);
         }
-        .splash-om {
-            font-family: 'Noto Serif Devanagari', serif;
-            font-size: 6.5rem;
-            color: #FBBF24; /* Solid Traditional Gold */
-            margin-bottom: 5px;
-            filter: drop-shadow(0 0 15px rgba(251, 191, 36, 0.4)); 
-            animation: floatOm 4s ease-in-out infinite;
-        }
-        @keyframes floatOm { 
-            0%, 100% { transform: translateY(0); } 
-            50% { transform: translateY(-10px); } 
-        }
-        #splash h1 { 
-            font-family: 'Cinzel', serif; /* Classic, Elegant, Simple */
-            font-size: 2.4rem; 
-            color: #FDBA74; 
-            line-height: 1.2; text-align: center; margin-bottom: 10px;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-        #splash p { 
-            font-family: 'Noto Serif Devanagari', serif;
-            font-size: 1.3rem; color: #E2E8F0; font-weight: 400; letter-spacing: 0.5px;
-        }
-        .splash-shloka {
-            position: absolute; bottom: 60px;
-            font-family: 'Noto Serif Devanagari', serif;
-            font-size: 1.1rem; color: #94A3B8; text-align: center; 
-            font-weight: 400; line-height: 1.8; opacity: 0.9;
-        }
+        .splash-om { font-family: 'Noto Serif Devanagari', serif; font-size: 6.5rem; color: #FBBF24; filter: drop-shadow(0 0 15px rgba(251, 191, 36, 0.4)); animation: floatOm 4s ease-in-out infinite; margin-bottom: 5px; }
+        @keyframes floatOm { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        #splash h1 { font-family: 'Cinzel', serif; font-size: 2.4rem; color: #FDBA74; text-align: center; font-weight: 700; margin-bottom: 10px;}
+        #splash p { font-family: 'Noto Serif Devanagari', serif; font-size: 1.3rem; color: var(--text-light); }
 
         /* --- Header --- */
-        header { padding: 20px; display: flex; justify-content: space-between; align-items: center; background: var(--app-bg); border-bottom: 1px solid var(--glass-border); z-index: 10; }
+        header { padding: 20px; display: flex; justify-content: space-between; align-items: center; background: var(--app-bg); border-bottom: 1px solid var(--glass-border); z-index: 10; transition: 0.3s;}
         .mantra-title { font-family: 'Yatra One', cursive; font-size: 1.8rem; color: var(--active-glow); transition: color 0.3s;}
-        
-        select { background: var(--glass-bg); color: white; border: 1px solid var(--glass-border); padding: 8px 15px; border-radius: 12px; font-family: 'Poppins'; font-weight: 600; cursor: pointer;}
-        select option { background: var(--app-bg); color: white; }
+        select { background: var(--glass-bg); color: var(--text-light); border: 1px solid var(--glass-border); padding: 8px 15px; border-radius: 12px; font-family: 'Poppins'; font-weight: 600; cursor: pointer; transition: 0.3s;}
 
-        /* --- Main Content --- */
-        main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding-bottom: 80px; }
-
-        /* --- Circular Progress & Premium Button --- */
-        .progress-container { position: relative; width: 280px; height: 280px; display: flex; justify-content: center; align-items: center; }
-        svg { position: absolute; width: 100%; height: 100%; transform: rotate(-90deg); overflow: visible; }
-        circle { fill: none; stroke-width: 14; stroke-linecap: round; }
-        .bg-circle { stroke: var(--glass-bg); }
-        .progress-circle { 
-            stroke: var(--active-glow); 
-            stroke-dasharray: 816; 
-            stroke-dashoffset: 816; 
-            transition: stroke-dashoffset 0.3s ease, stroke 0.3s ease; 
-            filter: drop-shadow(0 0 10px var(--active-glow));
+        /* --- Main Content (Scrollable to prevent cutting) --- */
+        main { 
+            flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            overflow-y: auto; padding-bottom: 100px; padding-top: 20px;
         }
 
+        /* --- Counter Elements --- */
+        .progress-container { position: relative; width: 260px; height: 260px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; flex-shrink: 0;}
+        svg { position: absolute; width: 100%; height: 100%; transform: rotate(-90deg); overflow: visible; }
+        circle { fill: none; stroke-width: 14; stroke-linecap: round; }
+        .bg-circle { stroke: var(--glass-border); }
+        .progress-circle { stroke: var(--active-glow); stroke-dasharray: 754; stroke-dashoffset: 754; transition: 0.3s ease; filter: drop-shadow(0 0 10px var(--active-glow)); }
+
         .jap-btn {
-            width: 210px; height: 210px; border-radius: 50%;
-            background: var(--active-grad);
-            border: none;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(255,255,255,0.2);
-            color: white; cursor: pointer;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            width: 190px; height: 190px; border-radius: 50%; background: var(--active-grad); border: none;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3), inset 0 0 20px rgba(255,255,255,0.2);
+            color: #ffffff !important; cursor: pointer; display: flex; flex-direction: column; justify-content: center; align-items: center;
             position: relative; overflow: hidden; transition: transform 0.1s, background 0.3s;
         }
         .jap-btn:active { transform: scale(0.95); }
-        .count-text { font-size: 4rem; font-weight: 800; line-height: 1; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        .target-text { font-size: 1.1rem; opacity: 0.8; margin-top: 5px; font-weight: 600; }
-
-        /* Ripple Effect */
+        .count-text { font-size: 3.5rem; font-weight: 800; line-height: 1; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .target-text { font-size: 1rem; opacity: 0.9; margin-top: 5px; font-weight: 600; }
         .ripple { position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.4); transform: scale(0); animation: rippleAnim 0.5s linear; pointer-events: none; }
         @keyframes rippleAnim { to { transform: scale(3); opacity: 0; } }
 
         /* --- Stats Cards --- */
-        .stats-row { display: flex; gap: 20px; margin-top: 40px; }
-        .stat-card { 
-            background: var(--glass-bg); border: 1px solid var(--glass-border); 
-            padding: 15px 35px; border-radius: 20px; text-align: center; 
-            cursor: pointer; transition: transform 0.2s;
-        }
+        .stats-row { display: flex; gap: 15px; flex-shrink: 0;}
+        .stat-card { background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 15px 30px; border-radius: 20px; text-align: center; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.05); min-width: 130px;}
         .stat-card:active { transform: scale(0.95); }
-        .stat-card h3 { font-size: 0.9rem; color: #94A3B8; font-weight: 600; text-transform: uppercase;}
-        .stat-card p { font-size: 2rem; font-weight: 800; color: var(--text-light); }
+        .stat-card h3 { font-size: 0.9rem; color: var(--text-muted); font-weight: 600;}
+        .stat-card p { font-size: 1.8rem; font-weight: 800; color: var(--text-light); }
 
         /* --- Bottom Navigation --- */
         nav { 
-            position: fixed; bottom: 0; width: 100%; 
-            background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px); 
-            border-top: 1px solid var(--glass-border); 
-            display: flex; justify-content: space-around; 
-            padding: 15px 5px 25px 5px; z-index: 100;
+            position: fixed; bottom: 0; width: 100%; background: var(--nav-bg); backdrop-filter: blur(20px); 
+            border-top: 1px solid var(--glass-border); display: flex; justify-content: space-around; 
+            padding: 12px 5px 25px 5px; z-index: 100; transition: 0.3s;
         }
-        .nav-item { display: flex; flex-direction: column; align-items: center; color: #64748B; font-size: 0.8rem; cursor: pointer; transition: 0.3s; width: 20%; font-weight: 600; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); font-size: 0.8rem; cursor: pointer; transition: 0.3s; width: 20%; font-weight: 600; }
         .nav-item.active { color: var(--active-glow); transform: translateY(-5px); }
         .nav-item .icon { font-size: 1.5rem; margin-bottom: 5px; }
 
-        /* --- Info Page --- */
-        .info-page { display: none; position: absolute; inset: 0; background: var(--app-bg); z-index: 50; padding: 30px; padding-top: 80px; overflow-y: auto; }
-        .info-page.active { display: block; animation: fadeIn 0.3s ease; }
-        .info-content { background: var(--glass-bg); padding: 25px; border-radius: 20px; border: 1px solid var(--glass-border); }
-        .info-page h2 { font-family: 'Yatra One'; color: var(--active-glow); font-size: 2rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; margin-bottom: 20px;}
-        .info-page h3 { color: #fff; margin-top: 20px; margin-bottom: 10px; font-size: 1.1rem;}
-        .info-page p { color: #CBD5E1; margin-bottom: 10px; line-height: 1.6;}
+        /* --- Settings Page --- */
+        .page { display: none; position: absolute; top: 80px; left: 0; width: 100%; height: calc(100dvh - 160px); background: var(--app-bg); z-index: 50; padding: 20px; overflow-y: auto; transition: 0.3s;}
+        .page.active { display: block; animation: fadeIn 0.3s ease; }
+        .setting-card { background: var(--glass-bg); padding: 20px; border-radius: 20px; border: 1px solid var(--glass-border); margin-bottom: 15px;}
+        .setting-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;}
+        .setting-row span { font-weight: 600; font-size: 1.1rem; color: var(--text-light);}
         
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* Toggles */
+        .toggle-switch { position: relative; width: 50px; height: 26px; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #CBD5E1; transition: .4s; border-radius: 34px; }
+        body:not(.light-mode) .slider { background-color: #334155; }
+        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background: var(--active-grad); }
+        input:checked + .slider:before { transform: translateX(24px); }
+
+        /* Color Swatches */
+        .color-palette { display: flex; gap: 15px; margin-top: 15px; flex-wrap: wrap; justify-content: center;}
+        .swatch { width: 40px; height: 40px; border-radius: 50%; cursor: pointer; border: 3px solid transparent; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.2);}
+        .swatch.active { border-color: var(--text-light); transform: scale(1.1); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px);} to { opacity: 1; transform: translateY(0);} }
 
         /* --- Popup --- */
-        #popup { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 1000; }
-        .popup-box { 
-            background: #1E293B; color: white; padding: 40px; border-radius: 25px; text-align: center; 
-            border: 1px solid var(--active-glow); box-shadow: 0 0 30px rgba(0,0,0,0.5);
-            transform: scale(0.8); opacity: 0; transition: all 0.3s ease; max-width: 85%;
-        }
+        #popup { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 1000; }
+        .popup-box { background: var(--popup-bg); color: var(--text-light); padding: 40px; border-radius: 25px; text-align: center; border: 1px solid var(--active-glow); box-shadow: 0 0 30px rgba(0,0,0,0.2); transform: scale(0.8); opacity: 0; transition: 0.3s; width: 85%; max-width: 350px;}
         .popup-box.show { transform: scale(1); opacity: 1; }
-        .popup-box h1 { font-size: 3.5rem; margin-bottom: 10px; }
-        .popup-box h2 { font-family: 'Yatra One'; background: var(--active-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 2.5rem; margin-bottom: 10px; }
-        .popup-box p { font-size: 1.2rem; margin-bottom: 25px; color: #CBD5E1; }
-        .btn-close { 
-            background: var(--active-grad); color: white; border: none; 
-            padding: 12px 35px; border-radius: 30px; font-size: 1.1rem; font-weight: bold; cursor: pointer; 
-        }
-
-        /* AdMob Banner Placeholder */
-        #ad-banner { position: fixed; bottom: 0; left: 0; width: 100%; height: 50px; background: #000; display: flex; justify-content: center; align-items: center; font-size: 0.8rem; color: #64748B; z-index: 999; border-top: 1px solid #1E293B;}
+        .popup-box h2 { font-family: 'Yatra One'; background: var(--active-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 2.5rem; margin-top: 10px; margin-bottom: 10px; }
+        .btn-close { background: var(--active-grad); color: white; border: none; padding: 12px 35px; border-radius: 30px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 15px;}
     </style>
 </head>
 <body>
@@ -186,7 +142,6 @@
         <div class="splash-om">ॐ</div>
         <h1>Amazing<br>Jap Counter</h1>
         <p>शांति और भक्ति का मार्ग</p>
-        <div class="splash-shloka">त्वमेव माता च पिता त्वमेव ।<br>त्वमेव बन्धुश्च सखा त्वमेव ॥</div>
     </div>
 
     <header id="main-header">
@@ -201,11 +156,11 @@
 
     <main id="main-counter">
         <div class="progress-container">
-            <svg viewBox="0 0 280 280">
-                <circle class="bg-circle" cx="140" cy="140" r="130"></circle>
-                <circle class="progress-circle" id="prog-circle" cx="140" cy="140" r="130"></circle>
+            <svg viewBox="0 0 260 260">
+                <circle class="bg-circle" cx="130" cy="130" r="120"></circle>
+                <circle class="progress-circle" id="prog-circle" cx="130" cy="130" r="120"></circle>
             </svg>
-            <button class="jap-btn" id="btn-tap" onclick="doJap(event)">
+            <button class="jap-btn" onclick="doJap(event)">
                 <span class="count-text" id="count">0</span>
                 <span class="target-text">/ 108</span>
             </button>
@@ -223,18 +178,36 @@
         </div>
     </main>
 
-    <div id="info-page" class="info-page">
-        <div class="info-content">
-            <h2>सूचना एवं नीतियां</h2>
-            <h3>नियम और शर्तें</h3>
-            <p>1. Amazing Jap Counter पूरी तरह से निःशुल्क और आध्यात्मिक उपयोग के लिए है।</p>
-            <p>2. आपका सारा डेटा (जाप की संख्या) आपके फ़ोन में ही सुरक्षित रहता है। हम कोई भी डेटा सर्वर पर नहीं भेजते।</p>
-            
-            <h3>गोपनीयता नीति</h3>
-            <p><b>अनुमतियाँ:</b> यह ऐप केवल आपको अनुस्मारक भेजने के लिए नोटिफिकेशन की अनुमति मांगता है।</p>
-            <p><b>विज्ञापन:</b> ऐप को मुफ्त रखने के लिए Google AdMob का उपयोग किया गया है।</p>
-            
-            <p style="text-align: center; margin-top: 25px; color: #94A3B8;">संपर्क: manager.dukaan@gmail.com</p>
+    <div id="settings-page" class="page">
+        <h2 style="font-family: 'Yatra One'; margin-bottom: 20px; color: var(--active-glow);">सेटिंग्स</h2>
+        
+        <div class="setting-card">
+            <div class="setting-row">
+                <span>🌙 डार्क मोड</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="theme-toggle" onchange="toggleTheme()" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <hr style="border:0; border-top: 1px solid var(--glass-border); margin: 15px 0;">
+            <div class="setting-row">
+                <span>🔊 साउंड (Sound)</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="sound-toggle" onchange="toggleSound()" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="setting-card">
+            <span style="font-weight: 600; color: var(--text-muted);">✨ <span id="shade-god-name">राधा जी</span> के लिए शेड चुनें</span>
+            <div class="color-palette" id="shade-container">
+                </div>
+        </div>
+        
+        <div class="setting-card" style="text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+            <p>1. यह ऐप 100% सुरक्षित और ऑफलाइन है।</p>
+            <p style="margin-top: 10px;">संपर्क: manager.dukaan@gmail.com</p>
         </div>
     </div>
 
@@ -251,48 +224,78 @@
         <div class="nav-item" onclick="changeGod('navkar', this)">
             <span class="icon">🙏</span><span>नवकार</span>
         </div>
-        <div class="nav-item" onclick="showInfo(this)">
-            <span class="icon">ℹ️</span><span>Info</span>
+        <div class="nav-item" onclick="showSettings(this)">
+            <span class="icon">⚙️</span><span>सेटिंग्स</span>
         </div>
     </nav>
 
     <div id="popup">
         <div class="popup-box" id="popup-box">
-            <h1>🎉</h1>
+            <h1 style="font-size: 3rem;">🎉</h1>
             <h2 id="popup-msg">जय श्री कृष्णा</h2>
-            <p>आपकी 1 माला (108 जाप) पूरी हो गई है! 📿</p>
+            <p>आपकी 1 माला पूरी हो गई है! 📿</p>
             <button class="btn-close" onclick="closePopup()">आगे बढ़ें</button>
         </div>
     </div>
 
     <script>
+        // Data Structure
         const japsData = {
-            radha: { count: 0, malas: 0 },
-            shiva: { count: 0, malas: 0 },
-            ram: { count: 0, malas: 0 },
-            navkar: { count: 0, malas: 0 }
+            radha: { count: 0, malas: 0, shadeIndex: 0 },
+            shiva: { count: 0, malas: 0, shadeIndex: 0 },
+            ram: { count: 0, malas: 0, shadeIndex: 0 },
+            navkar: { count: 0, malas: 0, shadeIndex: 0 }
         };
 
-        const themes = {
-            radha: { title: 'राधा जाप', msg: 'जय श्री कृष्णा', grad: 'var(--radha-grad)', glow: 'var(--radha-glow)' },
-            shiva: { title: 'ॐ नमः शिवाय', msg: 'हर हर महादेव', grad: 'var(--shiva-grad)', glow: 'var(--shiva-glow)' },
-            ram: { title: 'जय श्री राम', msg: 'जय श्री राम', grad: 'var(--ram-grad)', glow: 'var(--ram-glow)' },
-            navkar: { title: 'णमोकार मंत्र', msg: 'जय जिनेन्द्र', grad: 'var(--navkar-grad)', glow: 'var(--navkar-glow)' }
+        // 5 Custom Shades for each God (Hex1, Hex2)
+        const godShades = {
+            radha: [
+                ['#6366F1', '#8B5CF6'], // Default
+                ['#D946EF', '#C084FC'], // Pinkish
+                ['#8B5CF6', '#EC4899'], // Purple-Pink
+                ['#A855F7', '#D8B4FE'], // Soft Purple
+                ['#4C1D95', '#7C3AED']  // Deep Violet
+            ],
+            shiva: [
+                ['#2563EB', '#60A5FA'], // Default
+                ['#0EA5E9', '#22D3EE'], // Cyan
+                ['#1D4ED8', '#3B82F6'], // Deep Blue
+                ['#38BDF8', '#BAE6FD'], // Sky
+                ['#0F766E', '#14B8A6']  // Teal
+            ],
+            ram: [
+                ['#F97316', '#FDBA74'], // Default
+                ['#EA580C', '#FB923C'], // Deep Orange
+                ['#DC2626', '#EF4444'], // Red
+                ['#D97706', '#FBBF24'], // Amber
+                ['#B91C1C', '#F87171']  // Crimson
+            ],
+            navkar: [
+                ['#10B981', '#34D399'], // Default
+                ['#059669', '#6EE7B7'], // Emerald
+                ['#16A34A', '#4ADE80'], // Green
+                ['#65A30D', '#A3E635'], // Lime
+                ['#0D9488', '#2DD4BF']  // Teal-Green
+            ]
         };
+
+        const titles = { radha: 'राधा जाप', shiva: 'ॐ नमः शिवाय', ram: 'जय श्री राम', navkar: 'णमोकार मंत्र' };
+        const msgs = { radha: 'जय श्री कृष्णा', shiva: 'हर हर महादेव', ram: 'जय श्री राम', navkar: 'जय जिनेन्द्र' };
 
         let currentGod = 'radha';
         let targetMalas = 5;
+        let isSoundOn = true;
         
         const circle = document.getElementById('prog-circle');
-        const circumference = 2 * Math.PI * 130; // 816.8
+        const circumference = 2 * Math.PI * 120; // 753.9
         circle.style.strokeDasharray = circumference;
         circle.style.strokeDashoffset = circumference;
 
-        // Audio Context
+        // Audio
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         let audioCtx = null;
-
         function playSound() {
+            if (!isSoundOn) return;
             if (!audioCtx) audioCtx = new AudioContext();
             if (audioCtx.state === 'suspended') audioCtx.resume();
             const osc = audioCtx.createOscillator();
@@ -308,9 +311,12 @@
             setTimeout(() => {
                 document.getElementById('splash').style.opacity = '0';
                 setTimeout(() => document.getElementById('splash').style.display = 'none', 800);
-            }, 3000); 
+            }, 2500); 
+            applyShade(currentGod); // Init colors
+            renderSwatches();
         };
 
+        // --- Core Functions ---
         function doJap(e) {
             playSound();
             if (navigator.vibrate) navigator.vibrate(40);
@@ -319,7 +325,6 @@
             japsData[currentGod].count++;
             let cCount = japsData[currentGod].count;
             document.getElementById('count').innerText = cCount;
-            
             circle.style.strokeDashoffset = circumference - (cCount / 108) * circumference;
 
             if (cCount >= 108) {
@@ -329,7 +334,8 @@
                 document.getElementById('malas').innerText = japsData[currentGod].malas;
                 document.getElementById('count').innerText = 0;
                 circle.style.strokeDashoffset = circumference;
-                fireConfetti(); showPopup();
+                confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, zIndex: 2000 }); 
+                showPopup();
             }
         }
 
@@ -346,32 +352,73 @@
             setTimeout(() => ripple.remove(), 500);
         }
 
-        function fireConfetti() {
-            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, zIndex: 2000 });
-        }
-
         function changeGod(god, element) {
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             element.classList.add('active');
             
             document.getElementById('main-header').style.display = 'flex';
             document.getElementById('main-counter').style.display = 'flex';
-            document.getElementById('info-page').classList.remove('active');
+            document.getElementById('settings-page').classList.remove('active');
             
             currentGod = god;
+            applyShade(god);
+            renderSwatches();
             
-            // 🔥 Update Theme Dynamically using CSS Variables
-            document.documentElement.style.setProperty('--active-grad', themes[god].grad);
-            document.documentElement.style.setProperty('--active-glow', themes[god].glow);
+            document.getElementById('m-title').innerText = titles[god];
+            document.getElementById('popup-msg').innerText = msgs[god];
+            document.getElementById('shade-god-name').innerText = titles[god].split(' ')[0] + ' जी';
             
-            document.getElementById('m-title').innerText = themes[god].title;
-            document.getElementById('popup-msg').innerText = themes[god].msg;
-            
-            // Restore Counts
             let data = japsData[god];
             document.getElementById('count').innerText = data.count;
             document.getElementById('malas').innerText = data.malas;
             circle.style.strokeDashoffset = circumference - (data.count / 108) * circumference;
+        }
+
+        // --- Settings & Themes ---
+        function applyShade(god) {
+            let index = japsData[god].shadeIndex;
+            let colors = godShades[god][index];
+            document.documentElement.style.setProperty('--active-grad', `linear-gradient(135deg, ${colors[0]}, ${colors[1]})`);
+            document.documentElement.style.setProperty('--active-glow', colors[1]);
+        }
+
+        function renderSwatches() {
+            const container = document.getElementById('shade-container');
+            container.innerHTML = '';
+            let shades = godShades[currentGod];
+            
+            shades.forEach((colors, index) => {
+                let div = document.createElement('div');
+                div.className = 'swatch';
+                if(index === japsData[currentGod].shadeIndex) div.classList.add('active');
+                div.style.background = `linear-gradient(135deg, ${colors[0]}, ${colors[1]})`;
+                div.onclick = () => selectShade(index);
+                container.appendChild(div);
+            });
+        }
+
+        function selectShade(index) {
+            japsData[currentGod].shadeIndex = index;
+            applyShade(currentGod);
+            renderSwatches();
+        }
+
+        function showSettings(element) {
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+            document.getElementById('main-header').style.display = 'none';
+            document.getElementById('main-counter').style.display = 'none';
+            document.getElementById('settings-page').classList.add('active');
+        }
+
+        function toggleTheme() {
+            const isDark = document.getElementById('theme-toggle').checked;
+            if(isDark) document.body.classList.remove('light-mode');
+            else document.body.classList.add('light-mode');
+        }
+
+        function toggleSound() {
+            isSoundOn = document.getElementById('sound-toggle').checked;
         }
 
         function updateTarget() {
@@ -387,22 +434,12 @@
             }
         }
 
-        function showInfo(element) {
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            element.classList.add('active');
-            document.getElementById('main-header').style.display = 'none';
-            document.getElementById('main-counter').style.display = 'none';
-            document.getElementById('info-page').classList.add('active');
-        }
-
         function showPopup() {
             const popup = document.getElementById('popup');
             const box = document.getElementById('popup-box');
             popup.style.display = 'flex';
             setTimeout(() => box.classList.add('show'), 10);
-            if(japsData[currentGod].malas >= targetMalas) {
-                setTimeout(() => alert(`आपका ${targetMalas} माला का लक्ष्य पूर्ण हुआ!`), 500);
-            }
+            if(japsData[currentGod].malas >= targetMalas) setTimeout(() => alert(`आपका ${targetMalas} माला का लक्ष्य पूर्ण हुआ!`), 500);
         }
 
         function closePopup() {
