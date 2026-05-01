@@ -40,7 +40,7 @@
             font-family: 'Poppins', sans-serif;
             background-color: var(--app-bg);
             color: var(--text-light);
-            height: 100dvh; /* Fix for mobile browser clipping */
+            height: 100dvh;
             overflow: hidden;
             display: flex; flex-direction: column;
             transition: background-color 0.3s ease, color 0.3s ease;
@@ -63,7 +63,7 @@
         .mantra-title { font-family: 'Yatra One', cursive; font-size: 1.8rem; color: var(--active-glow); transition: color 0.3s;}
         select { background: var(--glass-bg); color: var(--text-light); border: 1px solid var(--glass-border); padding: 8px 15px; border-radius: 12px; font-family: 'Poppins'; font-weight: 600; cursor: pointer; transition: 0.3s;}
 
-        /* --- Main Content (Scrollable to prevent cutting) --- */
+        /* --- Main Content --- */
         main { 
             flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; 
             overflow-y: auto; padding-bottom: 100px; padding-top: 20px;
@@ -99,20 +99,22 @@
         nav { 
             position: fixed; bottom: 0; width: 100%; background: var(--nav-bg); backdrop-filter: blur(20px); 
             border-top: 1px solid var(--glass-border); display: flex; justify-content: space-around; 
-            padding: 12px 5px 25px 5px; z-index: 100; transition: 0.3s;
+            padding: 10px 2px 20px 2px; z-index: 100; transition: 0.3s;
         }
-        .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); font-size: 0.8rem; cursor: pointer; transition: 0.3s; width: 20%; font-weight: 600; }
-        .nav-item.active { color: var(--active-glow); transform: translateY(-5px); }
-        .nav-item .icon { font-size: 1.5rem; margin-bottom: 5px; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); font-size: 0.75rem; cursor: pointer; transition: 0.3s; width: 16.66%; font-weight: 600; text-align: center;}
+        .nav-item.active { color: var(--active-glow); transform: translateY(-4px); }
+        .nav-item .icon { font-size: 1.4rem; margin-bottom: 4px; }
 
-        /* --- Settings Page --- */
-        .page { display: none; position: absolute; top: 80px; left: 0; width: 100%; height: calc(100dvh - 160px); background: var(--app-bg); z-index: 50; padding: 20px; overflow-y: auto; transition: 0.3s;}
+        /* --- Pages (Settings & History) --- */
+        .page { display: none; position: absolute; top: 80px; left: 0; width: 100%; height: calc(100dvh - 150px); background: var(--app-bg); z-index: 50; padding: 20px; overflow-y: auto; transition: 0.3s;}
         .page.active { display: block; animation: fadeIn 0.3s ease; }
+        
+        .page-title { font-family: 'Yatra One'; margin-bottom: 20px; color: var(--active-glow); font-size: 2rem;}
+        
+        /* Settings UI */
         .setting-card { background: var(--glass-bg); padding: 20px; border-radius: 20px; border: 1px solid var(--glass-border); margin-bottom: 15px;}
         .setting-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;}
         .setting-row span { font-weight: 600; font-size: 1.1rem; color: var(--text-light);}
-        
-        /* Toggles */
         .toggle-switch { position: relative; width: 50px; height: 26px; }
         .toggle-switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #CBD5E1; transition: .4s; border-radius: 34px; }
@@ -120,11 +122,24 @@
         .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background: var(--active-grad); }
         input:checked + .slider:before { transform: translateX(24px); }
-
-        /* Color Swatches */
         .color-palette { display: flex; gap: 15px; margin-top: 15px; flex-wrap: wrap; justify-content: center;}
         .swatch { width: 40px; height: 40px; border-radius: 50%; cursor: pointer; border: 3px solid transparent; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.2);}
         .swatch.active { border-color: var(--text-light); transform: scale(1.1); }
+
+        /* History UI */
+        .history-filters { display: flex; gap: 10px; margin-bottom: 20px;}
+        .filter-btn { flex: 1; padding: 10px; border-radius: 12px; background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-muted); font-weight: 600; font-family: 'Poppins'; cursor: pointer; transition: 0.3s;}
+        .filter-btn.active { background: var(--active-grad); color: #fff; border-color: transparent;}
+        
+        .history-summary { background: var(--glass-bg); border: 1px solid var(--active-glow); padding: 20px; border-radius: 20px; text-align: center; margin-bottom: 20px;}
+        .history-summary h3 { font-size: 1.5rem; color: var(--text-light); margin-bottom: 15px;}
+        .s-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px;}
+        .s-grid div { background: rgba(0,0,0,0.2); padding: 10px; border-radius: 10px; font-weight: 600; font-size: 1rem;}
+        body.light-mode .s-grid div { background: rgba(0,0,0,0.05); }
+
+        .history-card { background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 15px; border-radius: 15px; margin-bottom: 12px;}
+        .h-date { font-weight: 800; font-size: 1.1rem; color: var(--text-light); border-bottom: 1px solid var(--glass-border); padding-bottom: 8px; margin-bottom: 8px;}
+        .h-details { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.95rem; color: var(--text-muted); font-weight: 600;}
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px);} to { opacity: 1; transform: translateY(0);} }
 
@@ -178,8 +193,21 @@
         </div>
     </main>
 
+    <div id="history-page" class="page">
+        <h2 class="page-title">इतिहास 📊</h2>
+        
+        <div class="history-filters">
+            <button class="filter-btn active" onclick="loadHistory(1, this)">1 दिन</button>
+            <button class="filter-btn" onclick="loadHistory(7, this)">7 दिन</button>
+            <button class="filter-btn" onclick="loadHistory(30, this)">1 महीना</button>
+        </div>
+
+        <div id="history-content">
+            </div>
+    </div>
+
     <div id="settings-page" class="page">
-        <h2 style="font-family: 'Yatra One'; margin-bottom: 20px; color: var(--active-glow);">सेटिंग्स</h2>
+        <h2 class="page-title">सेटिंग्स ⚙️</h2>
         
         <div class="setting-card">
             <div class="setting-row">
@@ -213,19 +241,22 @@
 
     <nav>
         <div class="nav-item active" onclick="changeGod('radha', this)">
-            <span class="icon">🪷</span><span>राधा जी</span>
+            <span class="icon">🪷</span><span>राधा</span>
         </div>
         <div class="nav-item" onclick="changeGod('shiva', this)">
-            <span class="icon">🔱</span><span>शिव जी</span>
+            <span class="icon">🔱</span><span>शिव</span>
         </div>
         <div class="nav-item" onclick="changeGod('ram', this)">
-            <span class="icon">🏹</span><span>श्री राम</span>
+            <span class="icon">🏹</span><span>राम</span>
         </div>
         <div class="nav-item" onclick="changeGod('navkar', this)">
             <span class="icon">🙏</span><span>नवकार</span>
         </div>
-        <div class="nav-item" onclick="showSettings(this)">
-            <span class="icon">⚙️</span><span>सेटिंग्स</span>
+        <div class="nav-item" onclick="showPage('history', this)">
+            <span class="icon">📊</span><span>इतिहास</span>
+        </div>
+        <div class="nav-item" onclick="showPage('settings', this)">
+            <span class="icon">⚙️</span><span>सेटिंग</span>
         </div>
     </nav>
 
@@ -240,43 +271,22 @@
 
     <script>
         // Data Structure
-        const japsData = {
+        let japsData = JSON.parse(localStorage.getItem('ajc_currentData')) || {
             radha: { count: 0, malas: 0, shadeIndex: 0 },
             shiva: { count: 0, malas: 0, shadeIndex: 0 },
             ram: { count: 0, malas: 0, shadeIndex: 0 },
             navkar: { count: 0, malas: 0, shadeIndex: 0 }
         };
+        
+        // History Storage (By Date)
+        let historyData = JSON.parse(localStorage.getItem('ajc_historyData')) || {};
 
-        // 5 Custom Shades for each God (Hex1, Hex2)
+        // 5 Custom Shades
         const godShades = {
-            radha: [
-                ['#6366F1', '#8B5CF6'], // Default
-                ['#D946EF', '#C084FC'], // Pinkish
-                ['#8B5CF6', '#EC4899'], // Purple-Pink
-                ['#A855F7', '#D8B4FE'], // Soft Purple
-                ['#4C1D95', '#7C3AED']  // Deep Violet
-            ],
-            shiva: [
-                ['#2563EB', '#60A5FA'], // Default
-                ['#0EA5E9', '#22D3EE'], // Cyan
-                ['#1D4ED8', '#3B82F6'], // Deep Blue
-                ['#38BDF8', '#BAE6FD'], // Sky
-                ['#0F766E', '#14B8A6']  // Teal
-            ],
-            ram: [
-                ['#F97316', '#FDBA74'], // Default
-                ['#EA580C', '#FB923C'], // Deep Orange
-                ['#DC2626', '#EF4444'], // Red
-                ['#D97706', '#FBBF24'], // Amber
-                ['#B91C1C', '#F87171']  // Crimson
-            ],
-            navkar: [
-                ['#10B981', '#34D399'], // Default
-                ['#059669', '#6EE7B7'], // Emerald
-                ['#16A34A', '#4ADE80'], // Green
-                ['#65A30D', '#A3E635'], // Lime
-                ['#0D9488', '#2DD4BF']  // Teal-Green
-            ]
+            radha: [['#6366F1', '#8B5CF6'], ['#D946EF', '#C084FC'], ['#8B5CF6', '#EC4899'], ['#A855F7', '#D8B4FE'], ['#4C1D95', '#7C3AED']],
+            shiva: [['#2563EB', '#60A5FA'], ['#0EA5E9', '#22D3EE'], ['#1D4ED8', '#3B82F6'], ['#38BDF8', '#BAE6FD'], ['#0F766E', '#14B8A6']],
+            ram: [['#F97316', '#FDBA74'], ['#EA580C', '#FB923C'], ['#DC2626', '#EF4444'], ['#D97706', '#FBBF24'], ['#B91C1C', '#F87171']],
+            navkar: [['#10B981', '#34D399'], ['#059669', '#6EE7B7'], ['#16A34A', '#4ADE80'], ['#65A30D', '#A3E635'], ['#0D9488', '#2DD4BF']]
         };
 
         const titles = { radha: 'राधा जाप', shiva: 'ॐ नमः शिवाय', ram: 'जय श्री राम', navkar: 'णमोकार मंत्र' };
@@ -289,9 +299,8 @@
         const circle = document.getElementById('prog-circle');
         const circumference = 2 * Math.PI * 120; // 753.9
         circle.style.strokeDasharray = circumference;
-        circle.style.strokeDashoffset = circumference;
-
-        // Audio
+        
+        // Audio Initialization
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         let audioCtx = null;
         function playSound() {
@@ -312,17 +321,45 @@
                 document.getElementById('splash').style.opacity = '0';
                 setTimeout(() => document.getElementById('splash').style.display = 'none', 800);
             }, 2500); 
-            applyShade(currentGod); // Init colors
-            renderSwatches();
+            
+            // Restore saved settings
+            if(localStorage.getItem('ajc_theme') === 'light') {
+                document.getElementById('theme-toggle').checked = false;
+                toggleTheme();
+            }
+            if(localStorage.getItem('ajc_sound') === 'off') {
+                document.getElementById('sound-toggle').checked = false;
+                toggleSound();
+            }
+
+            changeGod('radha', document.querySelector('.nav-item')); // Initialize UI
         };
 
         // --- Core Functions ---
+        function getFormattedDate(d) {
+            return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+        }
+
+        function saveAllData() {
+            localStorage.setItem('ajc_currentData', JSON.stringify(japsData));
+            localStorage.setItem('ajc_historyData', JSON.stringify(historyData));
+        }
+
         function doJap(e) {
             playSound();
             if (navigator.vibrate) navigator.vibrate(40);
             createRipple(e);
 
+            // Update Current Screen Data
             japsData[currentGod].count++;
+            
+            // Record in History
+            const today = getFormattedDate(new Date());
+            if(!historyData[today]) historyData[today] = { radha: 0, shiva: 0, ram: 0, navkar: 0 };
+            historyData[today][currentGod]++;
+            
+            saveAllData(); // Save to LocalStorage
+
             let cCount = japsData[currentGod].count;
             document.getElementById('count').innerText = cCount;
             circle.style.strokeDashoffset = circumference - (cCount / 108) * circumference;
@@ -331,6 +368,9 @@
                 if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
                 japsData[currentGod].malas++;
                 japsData[currentGod].count = 0;
+                
+                saveAllData(); // Save reset state
+                
                 document.getElementById('malas').innerText = japsData[currentGod].malas;
                 document.getElementById('count').innerText = 0;
                 circle.style.strokeDashoffset = circumference;
@@ -358,7 +398,7 @@
             
             document.getElementById('main-header').style.display = 'flex';
             document.getElementById('main-counter').style.display = 'flex';
-            document.getElementById('settings-page').classList.remove('active');
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             
             currentGod = god;
             applyShade(god);
@@ -372,6 +412,84 @@
             document.getElementById('count').innerText = data.count;
             document.getElementById('malas').innerText = data.malas;
             circle.style.strokeDashoffset = circumference - (data.count / 108) * circumference;
+        }
+
+        function showPage(pageId, element) {
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+            
+            document.getElementById('main-header').style.display = 'none';
+            document.getElementById('main-counter').style.display = 'none';
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            
+            document.getElementById(pageId + '-page').classList.add('active');
+            
+            if(pageId === 'history') {
+                loadHistory(1, document.querySelector('.filter-btn')); // Load today's history by default
+            }
+        }
+
+        // --- History Logic ---
+        function loadHistory(days, btnElement) {
+            // Update active filter button
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            const contentDiv = document.getElementById('history-content');
+            let html = '';
+            let totals = { radha: 0, shiva: 0, ram: 0, navkar: 0 };
+            let grandTotal = 0;
+            
+            const today = new Date();
+            
+            // Loop backwards from today
+            for(let i=0; i<days; i++) {
+                let d = new Date(today);
+                d.setDate(d.getDate() - i);
+                let dateStr = getFormattedDate(d);
+                
+                let displayDate = d.toLocaleDateString('hi-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+                if(i === 0) displayDate = "आज (" + displayDate + ")";
+                else if(i === 1) displayDate = "कल (" + displayDate + ")";
+                
+                if(historyData[dateStr]) {
+                    let dayData = historyData[dateStr];
+                    let dayTotal = dayData.radha + dayData.shiva + dayData.ram + dayData.navkar;
+                    
+                    if(dayTotal > 0) {
+                        totals.radha += dayData.radha; totals.shiva += dayData.shiva;
+                        totals.ram += dayData.ram; totals.navkar += dayData.navkar;
+                        grandTotal += dayTotal;
+                        
+                        html += `<div class="history-card">
+                            <div class="h-date">${displayDate} <span style="float:right; color:var(--active-glow)">कुल: ${dayTotal}</span></div>
+                            <div class="h-details">`;
+                        if(dayData.radha > 0) html += `<span>🪷 राधा: ${dayData.radha}</span>`;
+                        if(dayData.shiva > 0) html += `<span>🔱 शिव: ${dayData.shiva}</span>`;
+                        if(dayData.ram > 0) html += `<span>🏹 राम: ${dayData.ram}</span>`;
+                        if(dayData.navkar > 0) html += `<span>🙏 नवकार: ${dayData.navkar}</span>`;
+                        html += `</div></div>`;
+                    }
+                }
+            }
+            
+            if(html === '') {
+                html = `<p style="text-align:center; color:var(--text-muted); margin-top:30px; font-weight:600;">कोई जाप रिकॉर्ड नहीं मिला।</p>`;
+            }
+            
+            let summaryHtml = `
+                <div class="history-summary">
+                    <h3>कुल जाप: ${grandTotal}</h3>
+                    <div class="s-grid">
+                        <div>🪷 ${totals.radha}</div>
+                        <div>🔱 ${totals.shiva}</div>
+                        <div>🏹 ${totals.ram}</div>
+                        <div>🙏 ${totals.navkar}</div>
+                    </div>
+                </div>
+            `;
+            
+            contentDiv.innerHTML = summaryHtml + html;
         }
 
         // --- Settings & Themes ---
@@ -399,26 +517,25 @@
 
         function selectShade(index) {
             japsData[currentGod].shadeIndex = index;
+            saveAllData();
             applyShade(currentGod);
             renderSwatches();
         }
 
-        function showSettings(element) {
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            element.classList.add('active');
-            document.getElementById('main-header').style.display = 'none';
-            document.getElementById('main-counter').style.display = 'none';
-            document.getElementById('settings-page').classList.add('active');
-        }
-
         function toggleTheme() {
             const isDark = document.getElementById('theme-toggle').checked;
-            if(isDark) document.body.classList.remove('light-mode');
-            else document.body.classList.add('light-mode');
+            if(isDark) {
+                document.body.classList.remove('light-mode');
+                localStorage.setItem('ajc_theme', 'dark');
+            } else {
+                document.body.classList.add('light-mode');
+                localStorage.setItem('ajc_theme', 'light');
+            }
         }
 
         function toggleSound() {
             isSoundOn = document.getElementById('sound-toggle').checked;
+            localStorage.setItem('ajc_sound', isSoundOn ? 'on' : 'off');
         }
 
         function updateTarget() {
@@ -427,8 +544,9 @@
         }
 
         function resetCounter() {
-            if(confirm("रीसेट करना चाहते हैं?")) {
+            if(confirm("वर्तमान माला काउंटर रीसेट करना चाहते हैं? (इतिहास सुरक्षित रहेगा)")) {
                 japsData[currentGod].malas = 0; japsData[currentGod].count = 0;
+                saveAllData();
                 document.getElementById('malas').innerText = 0; document.getElementById('count').innerText = 0;
                 circle.style.strokeDashoffset = circumference;
             }
