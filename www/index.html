@@ -267,7 +267,7 @@
 
         window.onload = () => {
             checkInternetConnection();
-            setTimeout(() => { document.getElementById('splash').style.opacity = '0'; setTimeout(() => document.getElementById('splash').style.display = 'none', 800); }, 2500); 
+            setTimeout(() => { document.getElementById('splash').style.opacity = '0'; setTimeout(() => document.getElementById('splash').style.display = 'none', 800); }, 4000); 
             if(localStorage.getItem('ajc_theme') === 'light') { document.getElementById('theme-toggle').checked = false; toggleTheme(); }
             if(localStorage.getItem('ajc_sound') === 'off') { document.getElementById('sound-toggle').checked = false; toggleSound(); }
             changeGod('radha', document.querySelector('.nav-item')); 
