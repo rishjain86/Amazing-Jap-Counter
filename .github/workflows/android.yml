@@ -34,7 +34,7 @@ jobs:
 
     - name: Add AdMob App ID to Manifest
       run: |
-        sed -i '/<\/application>/i \        <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-3940256099942544~3347511713"/>' android/app/src/main/AndroidManifest.xml
+        sed -i '/<\/application>/i \        <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-6519206650027176~3432580794"/>' android/app/src/main/AndroidManifest.xml
 
     - name: Setup Java JDK
       uses: actions/setup-java@v4
