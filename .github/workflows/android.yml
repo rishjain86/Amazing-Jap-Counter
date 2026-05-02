@@ -30,7 +30,8 @@ jobs:
     - name: Generate App Icons and Splash Screens
       run: |
         npm install -g @capacitor/assets
-        npx @capacitor/assets generate --android
+        # Forcefully generating assets from your assets folder
+        npx @capacitor/assets generate --android --assetPath assets
 
     - name: Add AdMob App ID to Manifest
       run: |
