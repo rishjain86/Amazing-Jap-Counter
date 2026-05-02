@@ -9,7 +9,6 @@
     
     <style>
         :root {
-            /* Default Dark Mode Colors */
             --app-bg: #0F172A;
             --text-light: #FFFFFF;
             --text-muted: #94A3B8;
@@ -17,13 +16,10 @@
             --glass-border: rgba(255, 255, 255, 0.1);
             --nav-bg: rgba(15, 23, 42, 0.95);
             --popup-bg: #1E293B;
-
-            /* Dynamic Variables (Set via JS) */
             --active-grad: linear-gradient(135deg, #6366F1, #8B5CF6);
             --active-glow: #8B5CF6;
         }
 
-        /* Light Mode Overrides */
         body.light-mode {
             --app-bg: #F8FAFC;
             --text-light: #0F172A;
@@ -36,96 +32,54 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
         
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--app-bg);
-            color: var(--text-light);
-            height: 100dvh;
-            overflow: hidden;
-            display: flex; flex-direction: column;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--app-bg); color: var(--text-light); height: 100dvh; overflow: hidden; display: flex; flex-direction: column; transition: 0.3s ease; }
 
-        /* --- Offline Overlay (No Internet Blocker) --- */
-        #offline-overlay {
-            position: fixed; inset: 0; background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(15px);
-            display: none; justify-content: center; align-items: center; z-index: 100000; flex-direction: column;
-        }
-        .offline-box {
-            background: var(--glass-bg); border: 1px solid #EF4444; padding: 40px 20px;
-            border-radius: 20px; text-align: center; width: 85%; max-width: 350px;
-            box-shadow: 0 10px 40px rgba(239, 68, 68, 0.2); animation: pulseOffline 2s infinite;
-        }
+        #offline-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(15px); display: none; justify-content: center; align-items: center; z-index: 100000; flex-direction: column; }
+        .offline-box { background: var(--glass-bg); border: 1px solid #EF4444; padding: 40px 20px; border-radius: 20px; text-align: center; width: 85%; max-width: 350px; box-shadow: 0 10px 40px rgba(239, 68, 68, 0.2); animation: pulseOffline 2s infinite; }
         .offline-box h2 { font-family: 'Yatra One'; color: #EF4444; margin: 15px 0; font-size: 2.2rem;}
         .offline-box p { color: #CBD5E1; font-size: 1.1rem; line-height: 1.5; font-weight: 600;}
         @keyframes pulseOffline { 0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
 
-        /* --- Splash Screen --- */
-        #splash {
-            position: fixed; inset: 0; 
-            background: radial-gradient(circle at center, var(--glass-bg) 0%, var(--app-bg) 100%); 
-            z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: opacity 0.8s ease; background-color: var(--app-bg);
-        }
+        #splash { position: fixed; inset: 0; background: radial-gradient(circle at center, var(--glass-bg) 0%, var(--app-bg) 100%); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.8s ease; background-color: var(--app-bg); }
         .splash-om { font-family: 'Noto Serif Devanagari', serif; font-size: 6.5rem; color: #FBBF24; filter: drop-shadow(0 0 15px rgba(251, 191, 36, 0.4)); animation: floatOm 4s ease-in-out infinite; margin-bottom: 5px; }
         @keyframes floatOm { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         #splash h1 { font-family: 'Cinzel', serif; font-size: 2.4rem; color: #FDBA74; text-align: center; font-weight: 700; margin-bottom: 10px;}
         #splash p { font-family: 'Noto Serif Devanagari', serif; font-size: 1.3rem; color: var(--text-light); }
 
-        /* --- Header --- */
         header { padding: 20px; display: flex; justify-content: space-between; align-items: center; background: var(--app-bg); border-bottom: 1px solid var(--glass-border); z-index: 10; transition: 0.3s;}
         .mantra-title { font-family: 'Yatra One', cursive; font-size: 1.8rem; color: var(--active-glow); transition: color 0.3s;}
         select { background: var(--glass-bg); color: var(--text-light); border: 1px solid var(--glass-border); padding: 8px 15px; border-radius: 12px; font-family: 'Poppins'; font-weight: 600; cursor: pointer; transition: 0.3s;}
 
-        /* --- Main Content --- */
-        main { 
-            flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            overflow-y: auto; padding-bottom: 100px; padding-top: 20px;
-        }
+        main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow-y: auto; padding-bottom: 100px; padding-top: 20px; }
 
-        /* --- Counter Elements --- */
         .progress-container { position: relative; width: 260px; height: 260px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; flex-shrink: 0;}
         svg { position: absolute; width: 100%; height: 100%; transform: rotate(-90deg); overflow: visible; }
         circle { fill: none; stroke-width: 14; stroke-linecap: round; }
         .bg-circle { stroke: var(--glass-border); }
         .progress-circle { stroke: var(--active-glow); stroke-dasharray: 754; stroke-dashoffset: 754; transition: 0.3s ease; filter: drop-shadow(0 0 10px var(--active-glow)); }
 
-        .jap-btn {
-            width: 190px; height: 190px; border-radius: 50%; background: var(--active-grad); border: none;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3), inset 0 0 20px rgba(255,255,255,0.2);
-            color: #ffffff !important; cursor: pointer; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            position: relative; overflow: hidden; transition: transform 0.1s, background 0.3s;
-        }
+        .jap-btn { width: 190px; height: 190px; border-radius: 50%; background: var(--active-grad); border: none; box-shadow: 0 10px 25px rgba(0,0,0,0.3), inset 0 0 20px rgba(255,255,255,0.2); color: #ffffff !important; cursor: pointer; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; overflow: hidden; transition: transform 0.1s, background 0.3s; }
         .jap-btn:active { transform: scale(0.95); }
         .count-text { font-size: 3.5rem; font-weight: 800; line-height: 1; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
         .target-text { font-size: 1rem; opacity: 0.9; margin-top: 5px; font-weight: 600; }
         .ripple { position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.4); transform: scale(0); animation: rippleAnim 0.5s linear; pointer-events: none; }
         @keyframes rippleAnim { to { transform: scale(3); opacity: 0; } }
 
-        /* --- Stats Cards --- */
         .stats-row { display: flex; gap: 15px; flex-shrink: 0;}
         .stat-card { background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 15px 30px; border-radius: 20px; text-align: center; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.05); min-width: 130px;}
         .stat-card:active { transform: scale(0.95); }
         .stat-card h3 { font-size: 0.9rem; color: var(--text-muted); font-weight: 600;}
         .stat-card p { font-size: 1.8rem; font-weight: 800; color: var(--text-light); }
 
-        /* --- Bottom Navigation --- */
-        nav { 
-            position: fixed; bottom: 0; width: 100%; background: var(--nav-bg); backdrop-filter: blur(20px); 
-            border-top: 1px solid var(--glass-border); display: flex; justify-content: space-around; 
-            padding: 10px 2px 20px 2px; z-index: 100; transition: 0.3s;
-        }
+        nav { position: fixed; bottom: 0; width: 100%; background: var(--nav-bg); backdrop-filter: blur(20px); border-top: 1px solid var(--glass-border); display: flex; justify-content: space-around; padding: 10px 2px 20px 2px; z-index: 100; transition: 0.3s; }
         .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); font-size: 0.75rem; cursor: pointer; transition: 0.3s; width: 16.66%; font-weight: 600; text-align: center;}
         .nav-item.active { color: var(--active-glow); transform: translateY(-4px); }
         .nav-item .icon { font-size: 1.4rem; margin-bottom: 4px; }
 
-        /* --- Pages (Settings & History) --- */
         .page { display: none; position: absolute; top: 80px; left: 0; width: 100%; height: calc(100dvh - 150px); background: var(--app-bg); z-index: 50; padding: 20px; overflow-y: auto; transition: 0.3s;}
         .page.active { display: block; animation: fadeIn 0.3s ease; }
-        
         .page-title { font-family: 'Yatra One'; margin-bottom: 20px; color: var(--active-glow); font-size: 2rem;}
         
-        /* Settings UI */
         .setting-card { background: var(--glass-bg); padding: 20px; border-radius: 20px; border: 1px solid var(--glass-border); margin-bottom: 15px;}
         .setting-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;}
         .setting-row span { font-weight: 600; font-size: 1.1rem; color: var(--text-light);}
@@ -140,34 +94,31 @@
         .swatch { width: 40px; height: 40px; border-radius: 50%; cursor: pointer; border: 3px solid transparent; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.2);}
         .swatch.active { border-color: var(--text-light); transform: scale(1.1); }
 
-        /* History UI */
         .history-filters { display: flex; gap: 10px; margin-bottom: 20px;}
         .filter-btn { flex: 1; padding: 10px; border-radius: 12px; background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-muted); font-weight: 600; font-family: 'Poppins'; cursor: pointer; transition: 0.3s;}
         .filter-btn.active { background: var(--active-grad); color: #fff; border-color: transparent;}
-        
         .history-summary { background: var(--glass-bg); border: 1px solid var(--active-glow); padding: 20px; border-radius: 20px; text-align: center; margin-bottom: 20px;}
         .history-summary h3 { font-size: 1.5rem; color: var(--text-light); margin-bottom: 15px;}
         .s-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px;}
         .s-grid div { background: rgba(0,0,0,0.2); padding: 10px; border-radius: 10px; font-weight: 600; font-size: 1rem;}
         body.light-mode .s-grid div { background: rgba(0,0,0,0.05); }
-
         .history-card { background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 15px; border-radius: 15px; margin-bottom: 12px;}
         .h-date { font-weight: 800; font-size: 1.1rem; color: var(--text-light); border-bottom: 1px solid var(--glass-border); padding-bottom: 8px; margin-bottom: 8px;}
         .h-details { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.95rem; color: var(--text-muted); font-weight: 600;}
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px);} to { opacity: 1; transform: translateY(0);} }
 
-        /* --- Popup --- */
         #popup { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 1000; }
         .popup-box { background: var(--popup-bg); color: var(--text-light); padding: 40px; border-radius: 25px; text-align: center; border: 1px solid var(--active-glow); box-shadow: 0 0 30px rgba(0,0,0,0.2); transform: scale(0.8); opacity: 0; transition: 0.3s; width: 85%; max-width: 350px;}
         .popup-box.show { transform: scale(1); opacity: 1; }
         .popup-box h2 { font-family: 'Yatra One'; background: var(--active-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 2.5rem; margin-top: 10px; margin-bottom: 10px; }
         .btn-close { background: var(--active-grad); color: white; border: none; padding: 12px 35px; border-radius: 30px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 15px;}
         
-        /* Privacy Policy Modal */
         .privacy-content h3 { color: var(--active-glow); margin-top: 15px; margin-bottom: 5px; font-size: 1.1rem;}
         .privacy-content p, .privacy-content ul { margin-bottom: 10px; color: var(--text-muted); font-size: 0.9rem;}
         .privacy-content ul { padding-left: 20px;}
+        
+        #ad-banner { position: fixed; bottom: 0; left: 0; width: 100%; height: 50px; background: #000; display: flex; justify-content: center; align-items: center; font-size: 0.8rem; color: #64748B; z-index: 999; border-top: 1px solid #1E293B;}
     </style>
 </head>
 <body>
@@ -176,7 +127,7 @@
         <div class="offline-box">
             <div style="font-size: 5rem; margin-bottom: 10px;">📶</div>
             <h2>इंटरनेट बंद है!</h2>
-            <p>इस ऐप का उपयोग करने के लिए इंटरनेट या वाई-फाई चालू होना आवश्यक है। कृपया अपना कनेक्शन जांचें।</p>
+            <p>इस ऐप का उपयोग करने के लिए इंटरनेट चालू होना आवश्यक है। कृपया कनेक्शन जांचें।</p>
         </div>
     </div>
 
@@ -198,75 +149,41 @@
 
     <main id="main-counter">
         <div class="progress-container">
-            <svg viewBox="0 0 260 260">
-                <circle class="bg-circle" cx="130" cy="130" r="120"></circle>
-                <circle class="progress-circle" id="prog-circle" cx="130" cy="130" r="120"></circle>
-            </svg>
+            <svg viewBox="0 0 260 260"><circle class="bg-circle" cx="130" cy="130" r="120"></circle><circle class="progress-circle" id="prog-circle" cx="130" cy="130" r="120"></circle></svg>
             <button class="jap-btn" onclick="doJap(event)">
                 <span class="count-text" id="count">0</span>
                 <span class="target-text">/ 108</span>
             </button>
         </div>
-
         <div class="stats-row">
-            <div class="stat-card" onclick="resetCounter()">
-                <h3>कुल माला</h3>
-                <p id="malas">0</p>
-            </div>
-            <div class="stat-card">
-                <h3>लक्ष्य</h3>
-                <p id="target-display">5</p>
-            </div>
+            <div class="stat-card" onclick="resetCounter()"><h3>कुल माला</h3><p id="malas">0</p></div>
+            <div class="stat-card"><h3>लक्ष्य</h3><p id="target-display">5</p></div>
         </div>
     </main>
 
     <div id="history-page" class="page">
         <h2 class="page-title">इतिहास 📊</h2>
-        
         <div class="history-filters">
             <button class="filter-btn active" onclick="loadHistory(1, this)">1 दिन</button>
             <button class="filter-btn" onclick="loadHistory(7, this)">7 दिन</button>
             <button class="filter-btn" onclick="loadHistory(30, this)">1 महीना</button>
         </div>
-
-        <div id="history-content">
-            </div>
+        <div id="history-content"></div>
     </div>
 
     <div id="settings-page" class="page">
         <h2 class="page-title">सेटिंग्स ⚙️</h2>
-        
         <div class="setting-card">
-            <div class="setting-row">
-                <span>🌙 डार्क मोड</span>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="theme-toggle" onchange="toggleTheme()" checked>
-                    <span class="slider"></span>
-                </label>
-            </div>
+            <div class="setting-row"><span>🌙 डार्क मोड</span><label class="toggle-switch"><input type="checkbox" id="theme-toggle" onchange="toggleTheme()" checked><span class="slider"></span></label></div>
             <hr style="border:0; border-top: 1px solid var(--glass-border); margin: 15px 0;">
-            <div class="setting-row">
-                <span>🔊 साउंड (Sound)</span>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="sound-toggle" onchange="toggleSound()" checked>
-                    <span class="slider"></span>
-                </label>
-            </div>
+            <div class="setting-row"><span>🔊 साउंड (Sound)</span><label class="toggle-switch"><input type="checkbox" id="sound-toggle" onchange="toggleSound()" checked><span class="slider"></span></label></div>
         </div>
-
         <div class="setting-card">
             <span style="font-weight: 600; color: var(--text-muted);">✨ <span id="shade-god-name">राधा जी</span> के लिए शेड चुनें</span>
-            <div class="color-palette" id="shade-container">
-                </div>
+            <div class="color-palette" id="shade-container"></div>
         </div>
-        
         <div class="setting-card" onclick="openPrivacyPolicy()" style="cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; transition: 0.3s;">
-            <span style="font-size: 1.5rem;">📜</span> 
-            <span style="font-weight: 600; font-size: 1.1rem; color: var(--text-light);">Privacy Policy</span>
-        </div>
-
-        <div class="setting-card" style="text-align: center; color: var(--text-muted); font-size: 0.9rem;">
-            <p>संपर्क: manager.dukaan@gmail.com</p>
+            <span style="font-size: 1.5rem;">📜</span> <span style="font-weight: 600; font-size: 1.1rem; color: var(--text-light);">Privacy Policy</span>
         </div>
     </div>
 
@@ -275,56 +192,28 @@
             <h2 class="page-title" style="margin-bottom: 0;">Privacy Policy</h2>
             <span onclick="closePrivacyPolicy()" style="font-size: 1.5rem; cursor: pointer; color: var(--text-light);">❌</span>
         </div>
-        
         <div class="setting-card privacy-content" style="height: calc(100% - 70px); overflow-y: auto;">
             <p><strong>Effective Date:</strong> May 2026</p>
-            <p>Thank you for choosing <strong>Amazing Jap Counter</strong>. We are committed to protecting your personal information and right to privacy.</p>
-            
+            <p>Thank you for choosing <strong>Amazing Jap Counter</strong>.</p>
             <h3>1. Information We Do NOT Collect</h3>
-            <p>We want to be completely transparent with you: <strong>We do not collect, store, transmit, or share any of your personal data.</strong></p>
-            <ul>
-                <li><strong>Local Storage Only:</strong> All the data generated within the App, including your daily Chanting (Jap) counts, goals, and history, is stored strictly on your device's local storage.</li>
-                <li><strong>No Cloud Servers:</strong> We do not have servers, and your data never leaves your mobile phone.</li>
-                <li><strong>No Account Required:</strong> You do not need to create an account, log in, or provide an email address, name, or phone number to use the App.</li>
-            </ul>
-
-            <h3>2. Third-Party Services (Advertisements)</h3>
-            <p>To keep the app free, we use <strong>Google AdMob</strong> to display ads. AdMob may use standard device identifiers to serve relevant ads. You can review Google AdMob's Privacy Policy at: <br><a href="https://policies.google.com/privacy" target="_blank" style="color: var(--active-glow);">policies.google.com/privacy</a></p>
-
+            <p>We do not collect, store, transmit, or share any of your personal data.</p>
+            <ul><li><strong>Local Storage Only:</strong> All data is stored strictly on your device.</li><li><strong>No Cloud Servers:</strong> Data never leaves your mobile phone.</li></ul>
+            <h3>2. Third-Party Services</h3>
+            <p>We use <strong>Google AdMob</strong> to display ads. AdMob may use standard device identifiers to serve relevant ads. Review their policy at: <a href="https://policies.google.com/privacy" style="color: var(--active-glow);">policies.google.com/privacy</a></p>
             <h3>3. Device Permissions</h3>
-            <p>The App requests the following permission solely to enhance your user experience:</p>
-            <ul>
-                <li><strong>Notifications:</strong> We ask for local notification permission to send you a daily reminder (e.g., at 7:00 AM) to practice your Jap. These are triggered locally by your device.</li>
-            </ul>
-
-            <h3>4. Children’s Privacy</h3>
-            <p>Since our App does not collect any data, children can use the App safely without the risk of their personal information being compromised.</p>
-
-            <h3>5. Contact Us</h3>
-            <p>If you have any questions or suggestions regarding this Privacy Policy, please contact us at:</p>
+            <ul><li><strong>Notifications:</strong> We ask for local notification permission to send you a daily reminder.</li></ul>
+            <h3>4. Contact Us</h3>
             <p style="font-weight: bold; color: var(--text-light);">manager.dukaan@gmail.com</p>
         </div>
     </div>
 
     <nav>
-        <div class="nav-item active" onclick="changeGod('radha', this)">
-            <span class="icon">🪷</span><span>राधा</span>
-        </div>
-        <div class="nav-item" onclick="changeGod('shiva', this)">
-            <span class="icon">🔱</span><span>शिव</span>
-        </div>
-        <div class="nav-item" onclick="changeGod('ram', this)">
-            <span class="icon">🏹</span><span>राम</span>
-        </div>
-        <div class="nav-item" onclick="changeGod('navkar', this)">
-            <span class="icon">🙏</span><span>नवकार</span>
-        </div>
-        <div class="nav-item" onclick="showPage('history', this)">
-            <span class="icon">📊</span><span>इतिहास</span>
-        </div>
-        <div class="nav-item" onclick="showPage('settings', this)">
-            <span class="icon">⚙️</span><span>सेटिंग</span>
-        </div>
+        <div class="nav-item active" onclick="changeGod('radha', this)"><span class="icon">🪷</span><span>राधा</span></div>
+        <div class="nav-item" onclick="changeGod('shiva', this)"><span class="icon">🔱</span><span>शिव</span></div>
+        <div class="nav-item" onclick="changeGod('ram', this)"><span class="icon">🏹</span><span>राम</span></div>
+        <div class="nav-item" onclick="changeGod('navkar', this)"><span class="icon">🙏</span><span>नवकार</span></div>
+        <div class="nav-item" onclick="showPage('history', this)"><span class="icon">📊</span><span>इतिहास</span></div>
+        <div class="nav-item" onclick="showPage('settings', this)"><span class="icon">⚙️</span><span>सेटिंग</span></div>
     </nav>
 
     <div id="popup">
@@ -336,32 +225,20 @@
         </div>
     </div>
 
+    <div id="ad-banner">AdMob Banner Loading...</div>
+
     <script>
-        // --- Internet Connection Monitor ---
         function checkInternetConnection() {
             const overlay = document.getElementById('offline-overlay');
-            if (navigator.onLine) {
-                overlay.style.display = 'none';
-            } else {
-                overlay.style.display = 'flex';
-            }
+            if (navigator.onLine) overlay.style.display = 'none';
+            else overlay.style.display = 'flex';
         }
         window.addEventListener('online', checkInternetConnection);
         window.addEventListener('offline', checkInternetConnection);
 
-
-        // Data Structure
-        let japsData = JSON.parse(localStorage.getItem('ajc_currentData')) || {
-            radha: { count: 0, malas: 0, shadeIndex: 0 },
-            shiva: { count: 0, malas: 0, shadeIndex: 0 },
-            ram: { count: 0, malas: 0, shadeIndex: 0 },
-            navkar: { count: 0, malas: 0, shadeIndex: 0 }
-        };
-        
-        // History Storage (By Date)
+        let japsData = JSON.parse(localStorage.getItem('ajc_currentData')) || { radha: { count: 0, malas: 0, shadeIndex: 0 }, shiva: { count: 0, malas: 0, shadeIndex: 0 }, ram: { count: 0, malas: 0, shadeIndex: 0 }, navkar: { count: 0, malas: 0, shadeIndex: 0 } };
         let historyData = JSON.parse(localStorage.getItem('ajc_historyData')) || {};
 
-        // 5 Custom Shades
         const godShades = {
             radha: [['#6366F1', '#8B5CF6'], ['#D946EF', '#C084FC'], ['#8B5CF6', '#EC4899'], ['#A855F7', '#D8B4FE'], ['#4C1D95', '#7C3AED']],
             shiva: [['#2563EB', '#60A5FA'], ['#0EA5E9', '#22D3EE'], ['#1D4ED8', '#3B82F6'], ['#38BDF8', '#BAE6FD'], ['#0F766E', '#14B8A6']],
@@ -372,76 +249,85 @@
         const titles = { radha: 'राधा जाप', shiva: 'ॐ नमः शिवाय', ram: 'जय श्री राम', navkar: 'णमोकार मंत्र' };
         const msgs = { radha: 'जय श्री कृष्णा', shiva: 'हर हर महादेव', ram: 'जय श्री राम', navkar: 'जय जिनेन्द्र' };
 
-        let currentGod = 'radha';
-        let targetMalas = 5;
-        let isSoundOn = true;
-        
-        const circle = document.getElementById('prog-circle');
-        const circumference = 2 * Math.PI * 120; // 753.9
+        let currentGod = 'radha'; let targetMalas = 5; let isSoundOn = true;
+        const circle = document.getElementById('prog-circle'); const circumference = 2 * Math.PI * 120;
         circle.style.strokeDasharray = circumference;
         
-        // Audio Initialization
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        let audioCtx = null;
+        const AudioContext = window.AudioContext || window.webkitAudioContext; let audioCtx = null;
         function playSound() {
             if (!isSoundOn) return;
             if (!audioCtx) audioCtx = new AudioContext();
             if (audioCtx.state === 'suspended') audioCtx.resume();
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
+            const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
             osc.connect(gain); gain.connect(audioCtx.destination);
             osc.type = 'sine'; osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+            gain.gain.setValueAtTime(0.1, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
             osc.start(); osc.stop(audioCtx.currentTime + 0.1);
         }
 
         window.onload = () => {
-            // Check Internet initially
             checkInternetConnection();
-
-            setTimeout(() => {
-                document.getElementById('splash').style.opacity = '0';
-                setTimeout(() => document.getElementById('splash').style.display = 'none', 800);
-            }, 2500); 
-            
-            // Restore saved settings
-            if(localStorage.getItem('ajc_theme') === 'light') {
-                document.getElementById('theme-toggle').checked = false;
-                toggleTheme();
-            }
-            if(localStorage.getItem('ajc_sound') === 'off') {
-                document.getElementById('sound-toggle').checked = false;
-                toggleSound();
-            }
-
-            changeGod('radha', document.querySelector('.nav-item')); // Initialize UI
+            setTimeout(() => { document.getElementById('splash').style.opacity = '0'; setTimeout(() => document.getElementById('splash').style.display = 'none', 800); }, 2500); 
+            if(localStorage.getItem('ajc_theme') === 'light') { document.getElementById('theme-toggle').checked = false; toggleTheme(); }
+            if(localStorage.getItem('ajc_sound') === 'off') { document.getElementById('sound-toggle').checked = false; toggleSound(); }
+            changeGod('radha', document.querySelector('.nav-item')); 
+            initNativeFeatures();
         };
 
-        // --- Core Functions ---
-        function getFormattedDate(d) {
-            return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+        // --- AdMob & Notification Init ---
+        async function initNativeFeatures() {
+            try {
+                if (window.Capacitor && window.Capacitor.Plugins) {
+                    const { AdMob, LocalNotifications } = window.Capacitor.Plugins;
+                    await AdMob.initialize();
+                    
+                    // ==========================================
+                    // 1. BANNER AD SETUP 
+                    // (नीचे YOUR_BANNER_AD_UNIT_ID की जगह अपनी बैनर ID डालें)
+                    // ==========================================
+                    await AdMob.showBanner({
+                        adId: 'YOUR_BANNER_AD_UNIT_ID', 
+                        adSize: "BANNER", position: "BOTTOM_CENTER", margin: 0
+                    });
+                    document.getElementById('ad-banner').style.display = 'none';
+
+                    // ==========================================
+                    // 2. INTERSTITIAL AD PREPARE 
+                    // (नीचे YOUR_INTERSTITIAL_AD_UNIT_ID की जगह अपनी फुल स्क्रीन ID डालें)
+                    // ==========================================
+                    await AdMob.prepareInterstitial({ adId: 'YOUR_INTERSTITIAL_AD_UNIT_ID' });
+                    AdMob.addListener('interstitialAdDismissed', () => {
+                        // जब यूज़र ऐड काट दे, तो अगला ऐड लोड करने के लिए:
+                        AdMob.prepareInterstitial({ adId: 'YOUR_INTERSTITIAL_AD_UNIT_ID' });
+                    });
+
+                    // Notifications Init
+                    await LocalNotifications.requestPermissions();
+                    let t = new Date(); t.setDate(t.getDate()+1); t.setHours(7,0,0,0);
+                    await LocalNotifications.schedule({ notifications: [{ title: "सुप्रभात! जप का समय 🙏", body: "भगवान का स्मरण करें, आपका दिन शुभ हो।", id: 101, schedule: { at: t } }] });
+                }
+            } catch(e) { console.log("Native functionality skipped in browser"); }
         }
 
-        function saveAllData() {
-            localStorage.setItem('ajc_currentData', JSON.stringify(japsData));
-            localStorage.setItem('ajc_historyData', JSON.stringify(historyData));
+        async function showInterstitialAd() {
+            try {
+                if (window.Capacitor && window.Capacitor.Plugins.AdMob) {
+                    const { AdMob } = window.Capacitor.Plugins;
+                    await AdMob.showInterstitial();
+                }
+            } catch (e) { console.log(e); }
         }
+
+        function getFormattedDate(d) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+        function saveAllData() { localStorage.setItem('ajc_currentData', JSON.stringify(japsData)); localStorage.setItem('ajc_historyData', JSON.stringify(historyData)); }
 
         function doJap(e) {
-            playSound();
-            if (navigator.vibrate) navigator.vibrate(40);
-            createRipple(e);
-
-            // Update Current Screen Data
+            playSound(); if (navigator.vibrate) navigator.vibrate(40); createRipple(e);
             japsData[currentGod].count++;
-            
-            // Record in History
             const today = getFormattedDate(new Date());
             if(!historyData[today]) historyData[today] = { radha: 0, shiva: 0, ram: 0, navkar: 0 };
             historyData[today][currentGod]++;
-            
-            saveAllData(); // Save to LocalStorage
+            saveAllData();
 
             let cCount = japsData[currentGod].count;
             document.getElementById('count').innerText = cCount;
@@ -449,212 +335,90 @@
 
             if (cCount >= 108) {
                 if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
-                japsData[currentGod].malas++;
-                japsData[currentGod].count = 0;
-                
-                saveAllData(); // Save reset state
-                
+                japsData[currentGod].malas++; japsData[currentGod].count = 0; saveAllData();
                 document.getElementById('malas').innerText = japsData[currentGod].malas;
-                document.getElementById('count').innerText = 0;
-                circle.style.strokeDashoffset = circumference;
+                document.getElementById('count').innerText = 0; circle.style.strokeDashoffset = circumference;
                 confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, zIndex: 2000 }); 
                 showPopup();
             }
         }
 
         function createRipple(e) {
-            const btn = e.currentTarget;
-            const ripple = document.createElement('span');
-            ripple.classList.add('ripple');
-            const rect = btn.getBoundingClientRect();
-            const size = Math.max(rect.width, rect.height);
+            const btn = e.currentTarget; const ripple = document.createElement('span'); ripple.classList.add('ripple');
+            const rect = btn.getBoundingClientRect(); const size = Math.max(rect.width, rect.height);
             ripple.style.width = ripple.style.height = `${size}px`;
-            ripple.style.left = `${e.clientX - rect.left - size/2}px`;
-            ripple.style.top = `${e.clientY - rect.top - size/2}px`;
-            btn.appendChild(ripple);
-            setTimeout(() => ripple.remove(), 500);
+            ripple.style.left = `${e.clientX - rect.left - size/2}px`; ripple.style.top = `${e.clientY - rect.top - size/2}px`;
+            btn.appendChild(ripple); setTimeout(() => ripple.remove(), 500);
         }
 
         function changeGod(god, element) {
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            element.classList.add('active');
-            
-            document.getElementById('main-header').style.display = 'flex';
-            document.getElementById('main-counter').style.display = 'flex';
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active')); element.classList.add('active');
+            document.getElementById('main-header').style.display = 'flex'; document.getElementById('main-counter').style.display = 'flex';
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            
-            currentGod = god;
-            applyShade(god);
-            renderSwatches();
-            
-            document.getElementById('m-title').innerText = titles[god];
-            document.getElementById('popup-msg').innerText = msgs[god];
+            currentGod = god; applyShade(god); renderSwatches();
+            document.getElementById('m-title').innerText = titles[god]; document.getElementById('popup-msg').innerText = msgs[god];
             document.getElementById('shade-god-name').innerText = titles[god].split(' ')[0] + ' जी';
-            
-            let data = japsData[god];
-            document.getElementById('count').innerText = data.count;
-            document.getElementById('malas').innerText = data.malas;
+            let data = japsData[god]; document.getElementById('count').innerText = data.count; document.getElementById('malas').innerText = data.malas;
             circle.style.strokeDashoffset = circumference - (data.count / 108) * circumference;
         }
 
         function showPage(pageId, element) {
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            element.classList.add('active');
-            
-            document.getElementById('main-header').style.display = 'none';
-            document.getElementById('main-counter').style.display = 'none';
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active')); element.classList.add('active');
+            document.getElementById('main-header').style.display = 'none'; document.getElementById('main-counter').style.display = 'none';
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            
             document.getElementById(pageId + '-page').classList.add('active');
-            
-            if(pageId === 'history') {
-                loadHistory(1, document.querySelector('.filter-btn')); // Load today's history by default
-            }
+            if(pageId === 'history') loadHistory(1, document.querySelector('.filter-btn'));
         }
 
-        // --- History Logic ---
         function loadHistory(days, btnElement) {
-            // Update active filter button
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            btnElement.classList.add('active');
-
-            const contentDiv = document.getElementById('history-content');
-            let html = '';
-            let totals = { radha: 0, shiva: 0, ram: 0, navkar: 0 };
-            let grandTotal = 0;
-            
-            const today = new Date();
-            
-            // Loop backwards from today
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active')); btnElement.classList.add('active');
+            const contentDiv = document.getElementById('history-content'); let html = ''; let totals = { radha: 0, shiva: 0, ram: 0, navkar: 0 }; let grandTotal = 0; const today = new Date();
             for(let i=0; i<days; i++) {
-                let d = new Date(today);
-                d.setDate(d.getDate() - i);
-                let dateStr = getFormattedDate(d);
-                
+                let d = new Date(today); d.setDate(d.getDate() - i); let dateStr = getFormattedDate(d);
                 let displayDate = d.toLocaleDateString('hi-IN', { day: 'numeric', month: 'short', year: 'numeric' });
-                if(i === 0) displayDate = "आज (" + displayDate + ")";
-                else if(i === 1) displayDate = "कल (" + displayDate + ")";
-                
+                if(i === 0) displayDate = "आज (" + displayDate + ")"; else if(i === 1) displayDate = "कल (" + displayDate + ")";
                 if(historyData[dateStr]) {
-                    let dayData = historyData[dateStr];
-                    let dayTotal = dayData.radha + dayData.shiva + dayData.ram + dayData.navkar;
-                    
+                    let dayData = historyData[dateStr]; let dayTotal = dayData.radha + dayData.shiva + dayData.ram + dayData.navkar;
                     if(dayTotal > 0) {
-                        totals.radha += dayData.radha; totals.shiva += dayData.shiva;
-                        totals.ram += dayData.ram; totals.navkar += dayData.navkar;
-                        grandTotal += dayTotal;
-                        
-                        html += `<div class="history-card">
-                            <div class="h-date">${displayDate} <span style="float:right; color:var(--active-glow)">कुल: ${dayTotal}</span></div>
-                            <div class="h-details">`;
-                        if(dayData.radha > 0) html += `<span>🪷 राधा: ${dayData.radha}</span>`;
-                        if(dayData.shiva > 0) html += `<span>🔱 शिव: ${dayData.shiva}</span>`;
-                        if(dayData.ram > 0) html += `<span>🏹 राम: ${dayData.ram}</span>`;
-                        if(dayData.navkar > 0) html += `<span>🙏 नवकार: ${dayData.navkar}</span>`;
+                        totals.radha += dayData.radha; totals.shiva += dayData.shiva; totals.ram += dayData.ram; totals.navkar += dayData.navkar; grandTotal += dayTotal;
+                        html += `<div class="history-card"><div class="h-date">${displayDate} <span style="float:right; color:var(--active-glow)">कुल: ${dayTotal}</span></div><div class="h-details">`;
+                        if(dayData.radha > 0) html += `<span>🪷 राधा: ${dayData.radha}</span>`; if(dayData.shiva > 0) html += `<span>🔱 शिव: ${dayData.shiva}</span>`;
+                        if(dayData.ram > 0) html += `<span>🏹 राम: ${dayData.ram}</span>`; if(dayData.navkar > 0) html += `<span>🙏 नवकार: ${dayData.navkar}</span>`;
                         html += `</div></div>`;
                     }
                 }
             }
-            
-            if(html === '') {
-                html = `<p style="text-align:center; color:var(--text-muted); margin-top:30px; font-weight:600;">कोई जाप रिकॉर्ड नहीं मिला।</p>`;
-            }
-            
-            let summaryHtml = `
-                <div class="history-summary">
-                    <h3>कुल जाप: ${grandTotal}</h3>
-                    <div class="s-grid">
-                        <div>🪷 ${totals.radha}</div>
-                        <div>🔱 ${totals.shiva}</div>
-                        <div>🏹 ${totals.ram}</div>
-                        <div>🙏 ${totals.navkar}</div>
-                    </div>
-                </div>
-            `;
-            
+            if(html === '') html = `<p style="text-align:center; color:var(--text-muted); margin-top:30px; font-weight:600;">कोई जाप रिकॉर्ड नहीं मिला।</p>`;
+            let summaryHtml = `<div class="history-summary"><h3>कुल जाप: ${grandTotal}</h3><div class="s-grid"><div>🪷 ${totals.radha}</div><div>🔱 ${totals.shiva}</div><div>🏹 ${totals.ram}</div><div>🙏 ${totals.navkar}</div></div></div>`;
             contentDiv.innerHTML = summaryHtml + html;
         }
 
-        // --- Settings & Themes ---
-        function applyShade(god) {
-            let index = japsData[god].shadeIndex;
-            let colors = godShades[god][index];
-            document.documentElement.style.setProperty('--active-grad', `linear-gradient(135deg, ${colors[0]}, ${colors[1]})`);
-            document.documentElement.style.setProperty('--active-glow', colors[1]);
-        }
-
+        function applyShade(god) { let index = japsData[god].shadeIndex; let colors = godShades[god][index]; document.documentElement.style.setProperty('--active-grad', `linear-gradient(135deg, ${colors[0]}, ${colors[1]})`); document.documentElement.style.setProperty('--active-glow', colors[1]); }
         function renderSwatches() {
-            const container = document.getElementById('shade-container');
-            container.innerHTML = '';
-            let shades = godShades[currentGod];
-            
+            const container = document.getElementById('shade-container'); container.innerHTML = ''; let shades = godShades[currentGod];
             shades.forEach((colors, index) => {
-                let div = document.createElement('div');
-                div.className = 'swatch';
-                if(index === japsData[currentGod].shadeIndex) div.classList.add('active');
-                div.style.background = `linear-gradient(135deg, ${colors[0]}, ${colors[1]})`;
-                div.onclick = () => selectShade(index);
-                container.appendChild(div);
+                let div = document.createElement('div'); div.className = 'swatch'; if(index === japsData[currentGod].shadeIndex) div.classList.add('active');
+                div.style.background = `linear-gradient(135deg, ${colors[0]}, ${colors[1]})`; div.onclick = () => selectShade(index); container.appendChild(div);
             });
         }
-
-        function selectShade(index) {
-            japsData[currentGod].shadeIndex = index;
-            saveAllData();
-            applyShade(currentGod);
-            renderSwatches();
-        }
-
-        function toggleTheme() {
-            const isDark = document.getElementById('theme-toggle').checked;
-            if(isDark) {
-                document.body.classList.remove('light-mode');
-                localStorage.setItem('ajc_theme', 'dark');
-            } else {
-                document.body.classList.add('light-mode');
-                localStorage.setItem('ajc_theme', 'light');
-            }
-        }
-
-        function toggleSound() {
-            isSoundOn = document.getElementById('sound-toggle').checked;
-            localStorage.setItem('ajc_sound', isSoundOn ? 'on' : 'off');
-        }
-
-        function updateTarget() {
-            targetMalas = document.getElementById('target-mala').value;
-            document.getElementById('target-display').innerText = targetMalas;
-        }
-
-        function resetCounter() {
-            if(confirm("वर्तमान माला काउंटर रीसेट करना चाहते हैं? (इतिहास सुरक्षित रहेगा)")) {
-                japsData[currentGod].malas = 0; japsData[currentGod].count = 0;
-                saveAllData();
-                document.getElementById('malas').innerText = 0; document.getElementById('count').innerText = 0;
-                circle.style.strokeDashoffset = circumference;
-            }
-        }
-
-        function openPrivacyPolicy() {
-            document.getElementById('privacy-page').classList.add('active');
-        }
-
-        function closePrivacyPolicy() {
-            document.getElementById('privacy-page').classList.remove('active');
-        }
+        function selectShade(index) { japsData[currentGod].shadeIndex = index; saveAllData(); applyShade(currentGod); renderSwatches(); }
+        function toggleTheme() { const isDark = document.getElementById('theme-toggle').checked; if(isDark) { document.body.classList.remove('light-mode'); localStorage.setItem('ajc_theme', 'dark'); } else { document.body.classList.add('light-mode'); localStorage.setItem('ajc_theme', 'light'); } }
+        function toggleSound() { isSoundOn = document.getElementById('sound-toggle').checked; localStorage.setItem('ajc_sound', isSoundOn ? 'on' : 'off'); }
+        function updateTarget() { targetMalas = document.getElementById('target-mala').value; document.getElementById('target-display').innerText = targetMalas; }
+        function resetCounter() { if(confirm("वर्तमान माला काउंटर रीसेट करना चाहते हैं? (इतिहास सुरक्षित रहेगा)")) { japsData[currentGod].malas = 0; japsData[currentGod].count = 0; saveAllData(); document.getElementById('malas').innerText = 0; document.getElementById('count').innerText = 0; circle.style.strokeDashoffset = circumference; } }
+        function openPrivacyPolicy() { document.getElementById('privacy-page').classList.add('active'); }
+        function closePrivacyPolicy() { document.getElementById('privacy-page').classList.remove('active'); }
 
         function showPopup() {
-            const popup = document.getElementById('popup');
-            const box = document.getElementById('popup-box');
-            popup.style.display = 'flex';
-            setTimeout(() => box.classList.add('show'), 10);
+            const popup = document.getElementById('popup'); const box = document.getElementById('popup-box');
+            popup.style.display = 'flex'; setTimeout(() => box.classList.add('show'), 10);
+            
+            // 3. SHOW INTERSTITIAL AD (विज्ञापन दिखाएं)
+            showInterstitialAd();
+
             if(japsData[currentGod].malas >= targetMalas) setTimeout(() => alert(`आपका ${targetMalas} माला का लक्ष्य पूर्ण हुआ!`), 500);
         }
-
-        function closePopup() {
-            document.getElementById('popup-box').classList.remove('show');
-            setTimeout(() => document.getElementById('popup').style.display = 'none', 300);
-        }
+        function closePopup() { document.getElementById('popup-box').classList.remove('show'); setTimeout(() => document.getElementById('popup').style.display = 'none', 300); }
     </script>
 </body>
 </html>
