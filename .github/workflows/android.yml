@@ -24,14 +24,15 @@ jobs:
     - name: Setup Capacitor Android
       run: |
         npm install @capacitor/android
+        cp assets/splash.png www/splash.png || true
+        cp assets/Splash.png www/splash.png || true
         npx cap add android
         npx cap sync android
 
     - name: Generate App Icons and Splash Screens
       run: |
         npm install -g @capacitor/assets
-        # Forcefully generating assets from your assets folder
-        npx @capacitor/assets generate --android --assetPath assets
+        npx @capacitor/assets generate --android
 
     - name: Add AdMob App ID to Manifest
       run: |
