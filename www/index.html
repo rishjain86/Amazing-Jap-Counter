@@ -282,23 +282,21 @@
                     await AdMob.initialize();
                     
                     // ==========================================
-                    // 1. BANNER AD SETUP 
-                    // (नीचे YOUR_BANNER_AD_UNIT_ID की जगह अपनी बैनर ID डालें)
+                    // 1. BANNER AD SETUP (Original ID Added)
                     // ==========================================
                     await AdMob.showBanner({
-                        adId: 'YOUR_BANNER_AD_UNIT_ID', 
+                        adId: 'ca-app-pub-6519206650027176/8380595657', 
                         adSize: "BANNER", position: "BOTTOM_CENTER", margin: 0
                     });
                     document.getElementById('ad-banner').style.display = 'none';
 
                     // ==========================================
-                    // 2. INTERSTITIAL AD PREPARE 
-                    // (नीचे YOUR_INTERSTITIAL_AD_UNIT_ID की जगह अपनी फुल स्क्रीन ID डालें)
+                    // 2. INTERSTITIAL AD PREPARE (Original ID Added)
                     // ==========================================
-                    await AdMob.prepareInterstitial({ adId: 'YOUR_INTERSTITIAL_AD_UNIT_ID' });
+                    await AdMob.prepareInterstitial({ adId: 'ca-app-pub-6519206650027176/1262636469' });
                     AdMob.addListener('interstitialAdDismissed', () => {
                         // जब यूज़र ऐड काट दे, तो अगला ऐड लोड करने के लिए:
-                        AdMob.prepareInterstitial({ adId: 'YOUR_INTERSTITIAL_AD_UNIT_ID' });
+                        AdMob.prepareInterstitial({ adId: 'ca-app-pub-6519206650027176/1262636469' });
                     });
 
                     // Notifications Init
