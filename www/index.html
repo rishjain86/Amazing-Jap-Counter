@@ -40,11 +40,8 @@
         .offline-box p { color: #CBD5E1; font-size: 1.1rem; line-height: 1.5; font-weight: 600;}
         @keyframes pulseOffline { 0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
 
-        #splash { position: fixed; inset: 0; background: radial-gradient(circle at center, var(--glass-bg) 0%, var(--app-bg) 100%); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.8s ease; background-color: var(--app-bg); }
-        .splash-om { font-family: 'Noto Serif Devanagari', serif; font-size: 6.5rem; color: #FBBF24; filter: drop-shadow(0 0 15px rgba(251, 191, 36, 0.4)); animation: floatOm 4s ease-in-out infinite; margin-bottom: 5px; }
-        @keyframes floatOm { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        #splash h1 { font-family: 'Cinzel', serif; font-size: 2.4rem; color: #FDBA74; text-align: center; font-weight: 700; margin-bottom: 10px;}
-        #splash p { font-family: 'Noto Serif Devanagari', serif; font-size: 1.3rem; color: var(--text-light); }
+        /* Updated Splash Screen CSS */
+        #splash { position: fixed; inset: 0; background-color: #0F172A; background-image: url('splash.png'); background-size: cover; background-position: center; background-repeat: no-repeat; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.8s ease; }
 
         header { padding: 20px; display: flex; justify-content: space-between; align-items: center; background: var(--app-bg); border-bottom: 1px solid var(--glass-border); z-index: 10; transition: 0.3s;}
         .mantra-title { font-family: 'Yatra One', cursive; font-size: 1.8rem; color: var(--active-glow); transition: color 0.3s;}
@@ -131,11 +128,7 @@
         </div>
     </div>
 
-    <div id="splash">
-        <div class="splash-om">ॐ</div>
-        <h1>Amazing<br>Jap Counter</h1>
-        <p>शांति और भक्ति का मार्ग</p>
-    </div>
+    <div id="splash"></div>
 
     <header id="main-header">
         <div class="mantra-title" id="m-title">राधा जी</div>
@@ -267,7 +260,8 @@
 
         window.onload = () => {
             checkInternetConnection();
-            setTimeout(() => { document.getElementById('splash').style.opacity = '0'; setTimeout(() => document.getElementById('splash').style.display = 'none', 800); }, 4000); 
+            // Splash Timer updated to 3.5 seconds
+            setTimeout(() => { document.getElementById('splash').style.opacity = '0'; setTimeout(() => document.getElementById('splash').style.display = 'none', 800); }, 3500); 
             if(localStorage.getItem('ajc_theme') === 'light') { document.getElementById('theme-toggle').checked = false; toggleTheme(); }
             if(localStorage.getItem('ajc_sound') === 'off') { document.getElementById('sound-toggle').checked = false; toggleSound(); }
             changeGod('radha', document.querySelector('.nav-item')); 
@@ -281,25 +275,17 @@
                     const { AdMob, LocalNotifications } = window.Capacitor.Plugins;
                     await AdMob.initialize();
                     
-                    // ==========================================
-                    // 1. BANNER AD SETUP (Original ID Added)
-                    // ==========================================
                     await AdMob.showBanner({
                         adId: 'ca-app-pub-6519206650027176/8380595657', 
                         adSize: "BANNER", position: "BOTTOM_CENTER", margin: 0
                     });
                     document.getElementById('ad-banner').style.display = 'none';
 
-                    // ==========================================
-                    // 2. INTERSTITIAL AD PREPARE (Original ID Added)
-                    // ==========================================
                     await AdMob.prepareInterstitial({ adId: 'ca-app-pub-6519206650027176/1262636469' });
                     AdMob.addListener('interstitialAdDismissed', () => {
-                        // जब यूज़र ऐड काट दे, तो अगला ऐड लोड करने के लिए:
                         AdMob.prepareInterstitial({ adId: 'ca-app-pub-6519206650027176/1262636469' });
                     });
 
-                    // Notifications Init
                     await LocalNotifications.requestPermissions();
                     let t = new Date(); t.setDate(t.getDate()+1); t.setHours(7,0,0,0);
                     await LocalNotifications.schedule({ notifications: [{ title: "सुप्रभात! जप का समय 🙏", body: "भगवान का स्मरण करें, आपका दिन शुभ हो।", id: 101, schedule: { at: t } }] });
@@ -411,7 +397,6 @@
             const popup = document.getElementById('popup'); const box = document.getElementById('popup-box');
             popup.style.display = 'flex'; setTimeout(() => box.classList.add('show'), 10);
             
-            // 3. SHOW INTERSTITIAL AD (विज्ञापन दिखाएं)
             showInterstitialAd();
 
             if(japsData[currentGod].malas >= targetMalas) setTimeout(() => alert(`आपका ${targetMalas} माला का लक्ष्य पूर्ण हुआ!`), 500);
