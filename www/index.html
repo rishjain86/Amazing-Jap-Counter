@@ -40,14 +40,13 @@
         .offline-box p { color: #CBD5E1; font-size: 1.1rem; line-height: 1.5; font-weight: 600;}
         @keyframes pulseOffline { 0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
 
-        /* Updated Splash Screen CSS */
         #splash { position: fixed; inset: 0; background-color: #0F172A; background-image: url('splash.png'); background-size: cover; background-position: center; background-repeat: no-repeat; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.8s ease; }
 
         header { padding: 20px; display: flex; justify-content: space-between; align-items: center; background: var(--app-bg); border-bottom: 1px solid var(--glass-border); z-index: 10; transition: 0.3s;}
         .mantra-title { font-family: 'Yatra One', cursive; font-size: 1.8rem; color: var(--active-glow); transition: color 0.3s;}
         select { background: var(--glass-bg); color: var(--text-light); border: 1px solid var(--glass-border); padding: 8px 15px; border-radius: 12px; font-family: 'Poppins'; font-weight: 600; cursor: pointer; transition: 0.3s;}
 
-        main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow-y: auto; padding-bottom: 100px; padding-top: 20px; }
+        main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow-y: auto; padding-bottom: 150px; padding-top: 20px; }
 
         .progress-container { position: relative; width: 260px; height: 260px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; flex-shrink: 0;}
         svg { position: absolute; width: 100%; height: 100%; transform: rotate(-90deg); overflow: visible; }
@@ -68,12 +67,13 @@
         .stat-card h3 { font-size: 0.9rem; color: var(--text-muted); font-weight: 600;}
         .stat-card p { font-size: 1.8rem; font-weight: 800; color: var(--text-light); }
 
-        nav { position: fixed; bottom: 0; width: 100%; background: var(--nav-bg); backdrop-filter: blur(20px); border-top: 1px solid var(--glass-border); display: flex; justify-content: space-around; padding: 10px 2px 20px 2px; z-index: 100; transition: 0.3s; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); font-size: 0.75rem; cursor: pointer; transition: 0.3s; width: 16.66%; font-weight: 600; text-align: center;}
+        /* Navigation updated to fit 7 items using flex */
+        nav { position: fixed; bottom: 50px; width: 100%; background: var(--nav-bg); backdrop-filter: blur(20px); border-top: 1px solid var(--glass-border); display: flex; justify-content: space-around; padding: 10px 2px 10px 2px; z-index: 100; transition: 0.3s; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); font-size: 0.65rem; cursor: pointer; transition: 0.3s; flex: 1; font-weight: 600; text-align: center;}
         .nav-item.active { color: var(--active-glow); transform: translateY(-4px); }
         .nav-item .icon { font-size: 1.4rem; margin-bottom: 4px; }
 
-        .page { display: none; position: absolute; top: 80px; left: 0; width: 100%; height: calc(100dvh - 150px); background: var(--app-bg); z-index: 50; padding: 20px; overflow-y: auto; transition: 0.3s;}
+        .page { display: none; position: absolute; top: 80px; left: 0; width: 100%; height: calc(100dvh - 200px); background: var(--app-bg); z-index: 50; padding: 20px; overflow-y: auto; transition: 0.3s;}
         .page.active { display: block; animation: fadeIn 0.3s ease; }
         .page-title { font-family: 'Yatra One'; margin-bottom: 20px; color: var(--active-glow); font-size: 2rem;}
         
@@ -103,6 +103,10 @@
         .h-date { font-weight: 800; font-size: 1.1rem; color: var(--text-light); border-bottom: 1px solid var(--glass-border); padding-bottom: 8px; margin-bottom: 8px;}
         .h-details { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.95rem; color: var(--text-muted); font-weight: 600;}
 
+        /* Videos CSS */
+        .video-card { background: var(--glass-bg); padding: 10px; border-radius: 20px; border: 1px solid var(--glass-border); margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .video-wrapper { border-radius: 12px; overflow: hidden; position: relative; }
+
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px);} to { opacity: 1; transform: translateY(0);} }
 
         #popup { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 1000; }
@@ -114,8 +118,6 @@
         .privacy-content h3 { color: var(--active-glow); margin-top: 15px; margin-bottom: 5px; font-size: 1.1rem;}
         .privacy-content p, .privacy-content ul { margin-bottom: 10px; color: var(--text-muted); font-size: 0.9rem;}
         .privacy-content ul { padding-left: 20px;}
-        
-        #ad-banner { position: fixed; bottom: 0; left: 0; width: 100%; height: 50px; background: #000; display: flex; justify-content: center; align-items: center; font-size: 0.8rem; color: #64748B; z-index: 999; border-top: 1px solid #1E293B;}
     </style>
 </head>
 <body>
@@ -153,6 +155,34 @@
             <div class="stat-card"><h3>लक्ष्य</h3><p id="target-display">5</p></div>
         </div>
     </main>
+
+    <div id="videos-page" class="page">
+        <h2 class="page-title">भक्ति वीडियो 📺</h2>
+        
+        <div class="video-card">
+            <div class="video-wrapper">
+                <div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;"><iframe src="https://www.youtube.com/embed/wmNNphbKJ-I?rel=0" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen scrolling="no" allow="accelerometer *; clipboard-write *; encrypted-media *; gyroscope *; picture-in-picture *; web-share *;" referrerpolicy="strict-origin"></iframe></div>
+            </div>
+        </div>
+
+        <div class="video-card">
+            <div class="video-wrapper">
+                <div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;"><iframe src="https://www.youtube.com/embed/prPkyfkhhY0?rel=0" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen scrolling="no" allow="accelerometer *; clipboard-write *; encrypted-media *; gyroscope *; picture-in-picture *; web-share *;" referrerpolicy="strict-origin"></iframe></div>
+            </div>
+        </div>
+
+        <div class="video-card">
+            <div class="video-wrapper">
+                <div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;"><iframe src="https://www.youtube.com/embed/RpDFUCqRKEA?rel=0" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen scrolling="no" allow="accelerometer *; clipboard-write *; encrypted-media *; gyroscope *; picture-in-picture *; web-share *;" referrerpolicy="strict-origin"></iframe></div>
+            </div>
+        </div>
+
+        <div class="video-card">
+            <div class="video-wrapper">
+                <div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;"><iframe src="https://www.youtube.com/embed/yVNO-Ua6OmM?rel=0" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen scrolling="no" allow="accelerometer *; clipboard-write *; encrypted-media *; gyroscope *; picture-in-picture *; web-share *;" referrerpolicy="strict-origin"></iframe></div>
+            </div>
+        </div>
+    </div>
 
     <div id="history-page" class="page">
         <h2 class="page-title">इतिहास 📊</h2>
@@ -205,6 +235,7 @@
         <div class="nav-item" onclick="changeGod('shiva', this)"><span class="icon">🔱</span><span>शिव</span></div>
         <div class="nav-item" onclick="changeGod('ram', this)"><span class="icon">🏹</span><span>राम</span></div>
         <div class="nav-item" onclick="changeGod('navkar', this)"><span class="icon">🙏</span><span>नवकार</span></div>
+        <div class="nav-item" onclick="showPage('videos', this)"><span class="icon">📺</span><span>वीडियो</span></div>
         <div class="nav-item" onclick="showPage('history', this)"><span class="icon">📊</span><span>इतिहास</span></div>
         <div class="nav-item" onclick="showPage('settings', this)"><span class="icon">⚙️</span><span>सेटिंग</span></div>
     </nav>
@@ -217,8 +248,6 @@
             <button class="btn-close" onclick="closePopup()">आगे बढ़ें</button>
         </div>
     </div>
-
-    <div id="ad-banner">AdMob Banner Loading...</div>
 
     <script>
         function checkInternetConnection() {
@@ -260,7 +289,6 @@
 
         window.onload = () => {
             checkInternetConnection();
-            // Splash Timer updated to 3.5 seconds
             setTimeout(() => { document.getElementById('splash').style.opacity = '0'; setTimeout(() => document.getElementById('splash').style.display = 'none', 800); }, 3500); 
             if(localStorage.getItem('ajc_theme') === 'light') { document.getElementById('theme-toggle').checked = false; toggleTheme(); }
             if(localStorage.getItem('ajc_sound') === 'off') { document.getElementById('sound-toggle').checked = false; toggleSound(); }
@@ -279,7 +307,6 @@
                         adId: 'ca-app-pub-6519206650027176/8380595657', 
                         adSize: "BANNER", position: "BOTTOM_CENTER", margin: 0
                     });
-                    document.getElementById('ad-banner').style.display = 'none';
 
                     await AdMob.prepareInterstitial({ adId: 'ca-app-pub-6519206650027176/1262636469' });
                     AdMob.addListener('interstitialAdDismissed', () => {
