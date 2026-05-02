@@ -1,4 +1,4 @@
-name: Build Android APK
+name: Build Final Release APK
 
 on:
   push:
@@ -27,9 +27,14 @@ jobs:
         npx cap add android
         npx cap sync android
 
+    - name: Generate App Icons and Splash Screens
+      run: |
+        npm install -g @capacitor/assets
+        npx @capacitor/assets generate --android
+
     - name: Add AdMob App ID to Manifest
       run: |
-        sed -i '/<\/application>/i \        <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="YOUR_ADMOB_APP_ID"/>' android/app/src/main/AndroidManifest.xml
+        sed -i '/<\/application>/i \        <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-3940256099942544~3347511713"/>' android/app/src/main/AndroidManifest.xml
 
     - name: Setup Java JDK
       uses: actions/setup-java@v4
@@ -37,14 +42,23 @@ jobs:
         distribution: 'zulu'
         java-version: '17'
 
-    - name: Build Android APK
+    - name: Build Android Release APK
       run: |
         cd android
         chmod +x gradlew
-        ./gradlew assembleDebug
+        ./gradlew assembleRelease
 
-    - name: Upload APK Artifact
+    - name: Generate Keystore & Sign APK
+      run: |
+        # 1. Generate a secure Keystore automatically
+        keytool -genkey -v -keystore release-key.keystore -alias my_alias -keyalg RSA -keysize 2048 -validity 10000 -storepass password123 -keypass password123 -dname "CN=Amazing Jap,O=Omni,C=IN"
+        
+        # 2. Find the correct apksigner version and sign the APK
+        BUILD_TOOLS_VERSION=$(ls $ANDROID_HOME/build-tools | tail -1)
+        $ANDROID_HOME/build-tools/$BUILD_TOOLS_VERSION/apksigner sign --ks release-key.keystore --ks-pass pass:password123 --key-pass pass:password123 --out android/app/build/outputs/apk/release/Amazing-Jap-Counter-Release.apk android/app/build/outputs/apk/release/app-release-unsigned.apk
+
+    - name: Upload Signed Release APK
       uses: actions/upload-artifact@v4
       with:
-        name: Amazing-Jap-Counter-APK
-        path: android/app/build/outputs/apk/debug/app-debug.apk
+        name: Amazing-Jap-Counter-Final-APK
+        path: android/app/build/outputs/apk/release/Amazing-Jap-Counter-Release.apk
