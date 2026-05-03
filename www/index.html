@@ -30,8 +30,22 @@
             --popup-bg: #FFFFFF;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
+        /* --- TAP HIGHLIGHT & SELECTION FIX --- */
+        * { 
+            margin: 0; padding: 0; box-sizing: border-box; outline: none; 
+            -webkit-tap-highlight-color: transparent !important; 
+            -webkit-user-select: none !important; 
+            user-select: none !important; 
+            -webkit-touch-callout: none !important; 
+        }
+        input, textarea, select { 
+            -webkit-user-select: auto !important; 
+            user-select: auto !important; 
+        }
+        /* ------------------------------------- */
         
+        html, body { background-color: var(--app-bg) !important; }
+
         body { font-family: 'Poppins', sans-serif; background-color: var(--app-bg); color: var(--text-light); height: 100dvh; overflow: hidden; display: flex; flex-direction: column; transition: 0.3s ease; }
 
         #offline-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(15px); display: none; justify-content: center; align-items: center; z-index: 100000; flex-direction: column; }
@@ -244,7 +258,7 @@
         <div class="popup-box" id="popup-box">
             <h1 style="font-size: 3rem;">🎉</h1>
             <h2 id="popup-msg">जय श्री कृष्णा</h2>
-            <p>आपकी 1 माला पूरी हो गई है! 📿</p>
+            <p>आपकी 1 माला पूरी हो गई! 📿</p>
             <button class="btn-close" onclick="closePopup()">आगे बढ़ें</button>
         </div>
     </div>
